@@ -5,14 +5,16 @@
     <title>My test page</title>
   </head>
   <body>
+    <h1>Stock Inventario Backend</h1>
+    <h2>Questions? (Test)</h2>
     {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="/SIB_Index/{{ question.id }}/">{{ question.question_text }}</a></li>
+        <li><a href="{% url 'SIB:detail' question.id %}">{{ question.question_text }}</a></li>
     {% endfor %}
     </ul>
     {% else %}
-        <p>No polls are available.</p>
+        <p>No questions are available.</p>
     {% endif %}
   </body>
 </html>
