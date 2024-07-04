@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'rest_framework',
+    'coreapi',
     'StockInventarioB.apps.StockinventariobConfig',
 ]
 
@@ -144,5 +145,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # restfull api
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'PAGE_SIZE': 100
 }
