@@ -1,0 +1,17 @@
+# Ignora el cache de python
+/__pycache__
+
+# Ignora el cache de python de SIB
+/StockInventarioB/__pycache__
+
+# Ignora el cache de python del Django rest API
+/DjangoSQLrestAPI/__pycache__
+
+# Ignora el cache de python de SIB migrations
+/StockInventarioB/migrations/__pycache__
+
+# Ignora el virtual enviroment creado para correr flet
+/myenv
+
+# Ignora el sqlite que se crea por defecto
+/db.sqlite3
