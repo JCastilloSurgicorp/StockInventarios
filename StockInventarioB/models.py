@@ -154,6 +154,7 @@ class GR_Descripcion(models.Model):
     prod_id = models.ForeignKey(SI_Productos, on_delete=models.DO_NOTHING, db_column='PRODUCTO_ID')
     sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
     nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
+    cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
     
     def __str__(self):
         return self.nro_item
