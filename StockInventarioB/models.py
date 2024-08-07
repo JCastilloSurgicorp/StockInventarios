@@ -176,6 +176,8 @@ class GuiasRemision_OC(models.Model):
     estado = models.CharField(db_column='ESTADO', max_length=3, blank=True, null=True)
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
     obs = models.CharField(db_column='OBSERVACION', max_length=500, blank=True, null=True)
+    oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
+    nro_proceso = models.CharField(db_column='NRO_PROCESO', max_length=20, blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia
