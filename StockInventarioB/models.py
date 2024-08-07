@@ -162,3 +162,39 @@ class GR_Descripcion(models.Model):
     class Meta:
         managed = True
         db_table = 'GR_DESCRIPCION'
+
+
+class GuiasRemision_OC(models.Model):
+    empresa = models.ForeignKey(SI_Empresa, on_delete=models.DO_NOTHING, db_column='EMPRESA_ID')
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
+    atencion = models.CharField(db_column='ATENCION', max_length=15, blank=True, null=True)
+    representante = models.CharField(db_column='REPRESENTANTE', max_length=60, blank=True, null=True)
+    motivo = models.CharField(db_column='MOTIVO_TRASLADO', max_length=50, blank=True, null=True)
+    cliente = models.CharField(db_column='NOMBRE_CLIENTE', max_length=150, blank=True, null=True)
+    entrega = models.CharField(db_column='DIRECCION_ENTREGA', max_length=255, blank=True, null=True)
+    fecha_guia = models.DateField(db_column='FECHA_GUIA', blank=True, null=True)
+    estado = models.CharField(db_column='ESTADO', max_length=3, blank=True, null=True)
+    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
+    obs = models.CharField(db_column='OBSERVACION', max_length=500, blank=True, null=True)
+    
+    def __str__(self):
+        return self.nro_guia
+    
+    class Meta:
+        managed = True
+        db_table = 'GUIAS_REMISION_OC'
+
+
+class GR_Descripcion_OC(models.Model):
+    guia_id = models.ForeignKey(GuiasRemision, on_delete=models.DO_NOTHING, db_column='GUIA_ID')
+    prod_id = models.ForeignKey(SI_Productos, on_delete=models.DO_NOTHING, db_column='PRODUCTO_ID')
+    sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
+    nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
+    cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
+    
+    def __str__(self):
+        return self.nro_item
+    
+    class Meta:
+        managed = True
+        db_table = 'GR_DESCRIPCION_OC'
