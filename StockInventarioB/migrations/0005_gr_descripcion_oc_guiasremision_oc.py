@@ -12,21 +12,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='GR_Descripcion_OC',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nro_item', models.IntegerField(blank=True, db_column='NUMERO_ITEM', null=True)),
-                ('cantidad', models.DecimalField(blank=True, db_column='CANTIDAD', decimal_places=2, max_digits=18, null=True)),
-                ('guia_id', models.ForeignKey(db_column='GUIA_ID', on_delete=django.db.models.deletion.DO_NOTHING, to='StockInventarioB.guiasremision')),
-                ('prod_id', models.ForeignKey(db_column='PRODUCTO_ID', on_delete=django.db.models.deletion.DO_NOTHING, to='StockInventarioB.si_productos')),
-                ('sector_id', models.ForeignKey(db_column='SECTOR_ID', on_delete=django.db.models.deletion.DO_NOTHING, to='StockInventarioB.si_sector')),
-            ],
-            options={
-                'db_table': 'GR_DESCRIPCION_OC',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
             name='GuiasRemision_OC',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
