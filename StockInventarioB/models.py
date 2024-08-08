@@ -188,11 +188,13 @@ class GuiasRemision_OC(models.Model):
 
 
 class GR_Descripcion_OC(models.Model):
-    guia_id = models.ForeignKey(GuiasRemision, on_delete=models.DO_NOTHING, db_column='GUIA_ID')
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
     prod_id = models.ForeignKey(SI_Productos, on_delete=models.DO_NOTHING, db_column='PRODUCTO_ID')
     sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
     nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
     cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
+    lote = models.CharField(db_column='LOTE', max_length=30, blank=True, null=True)
+    venc_lote = models.DateField(db_column='VENCIMIENTO_LOTE', blank=True, null=True)
     
     def __str__(self):
         return self.nro_item
