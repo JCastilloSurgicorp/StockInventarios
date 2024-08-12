@@ -204,3 +204,16 @@ class GR_Descripcion_OC(models.Model):
     class Meta:
         managed = True
         db_table = 'GR_DESCRIPCION_OC'
+
+
+class GR_Busqueda(models.Model):
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
+    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
+    fecha_guia = models.DateField(db_column='FECHA_GUIA', blank=True, null=True)
+    
+    def __str__(self):
+        return self.nro_guia
+    
+    class Meta:
+        managed = True
+        db_table = 'GR_BUSQUEDA'
