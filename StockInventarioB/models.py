@@ -218,3 +218,17 @@ class GR_Busqueda(models.Model):
     class Meta:
         managed = True
         db_table = 'GR_BUSQUEDA'
+
+
+class Fact_Busqueda(models.Model):
+    nro_fact = models.CharField(db_column='NUMERO_FACTURA', max_length=20, blank=True, null=True)
+    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
+    fecha_emision = models.DateField(db_column='FECHA_EMISION', blank=True, null=True)
+    oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
+    
+    def __str__(self):
+        return self.nro_fact
+    
+    class Meta:
+        managed = True
+        db_table = 'FACT_BUSQUEDA'
