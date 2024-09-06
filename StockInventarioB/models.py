@@ -232,3 +232,26 @@ class Fact_Busqueda(models.Model):
     class Meta:
         managed = True
         db_table = 'FACT_BUSQUEDA'
+
+
+class HojaPicking(models.Model):
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
+    oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
+    status_picking = models.CharField(db_column='STATUS_PICKING', max_length=60, blank=True, null=True)
+    atencion = models.CharField(db_column='ATENCION', max_length=60, blank=True, null=True)
+    firma_atencion = models.CharField(db_column='FIRMA_ATENCION', max_length=60, blank=True, null=True)
+    fecha_atencion = models.DateTimeField(db_column='FECHA_ATENCION', blank=True, null=True)
+    almacen = models.CharField(db_column='ALMACEN', max_length=60, blank=True, null=True)
+    firma_almacen = models.CharField(db_column='FIRMA_ALMACEN', max_length=60, blank=True, null=True)
+    fecha_almacen = models.DateTimeField(db_column='FECHA_ALMACEN', blank=True, null=True)
+    distribucion = models.CharField(db_column='DISTRIBUCION', max_length=60, blank=True, null=True)
+    firma_distribucion = models.CharField(db_column='FIRMA_DISTRIBUCION', max_length=60, blank=True, null=True)
+    fecha_distribucion = models.DateTimeField(db_column='FECHA_DISTRIBUCION', blank=True, null=True)
+    lima_provincia = models.IntegerField(db_column='LIMA_PROVINCIA', blank=True, null=True)
+    
+    def __str__(self):
+        return self.nro_guia
+    
+    class Meta:
+        managed = True
+        db_table = 'HOJA_PICKING'
