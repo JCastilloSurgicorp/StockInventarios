@@ -234,6 +234,35 @@ class Fact_Busqueda(models.Model):
         db_table = 'FACT_BUSQUEDA'
 
 
+class Fact_Detalle(models.Model):
+    nro_fact = models.CharField(db_column='NUMERO_FACTURA', max_length=20, blank=True, null=True)
+    fecha_emision = models.DateField(db_column='FECHA_EMISION', blank=True, null=True)
+    monto = models.IntegerField(db_column='MONTO', blank=True, null=True)
+    moneda = models.CharField(db_column='MONEDA', max_length=20, blank=True, null=True)
+    nombre_cliente = models.CharField(db_column='NOMBRE_CLIENTE', max_length=150, blank=True, null=True)
+    cond_pago = models.CharField(db_column='CONDICION_PAGO', max_length=60, blank=True, null=True)
+    vendedor = models.CharField(db_column='VENDEDOR', max_length=60, blank=True, null=True)
+    cancelado = models.CharField(db_column='CANCELADO', max_length=1, blank=True, null=True)
+    estado = models.CharField(db_column='ESTADO', max_length=3, blank=True, null=True)
+    cobrado = models.DecimalField(db_column='COBRADO', max_digits=18, decimal_places=2, blank=True, null=True)
+    saldo = models.DecimalField(db_column='SALDO', max_digits=18, decimal_places=2, blank=True, null=True)
+    nc_fact_canje = models.CharField(db_column='NC_FACTURA_CANJE', max_length=35, blank=True, null=True)
+    nc_anulacion = models.CharField(db_column='NC_ANULACION', max_length=35, blank=True, null=True)
+    tit_grat = models.CharField(db_column='TITULO_GRATUITO', max_length=1, blank=True, null=True)
+    empresa = models.CharField(db_column='EMPRESA', max_length=150, blank=True, null=True)
+    dir_entr = models.CharField(db_column='DIRECCION_ENTREGA', max_length=255, blank=True, null=True)
+    sede = models.CharField(db_column='SEDE', max_length=60, blank=True, null=True)
+    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
+    oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
+    
+    def __str__(self):
+        return self.nro_fact
+    
+    class Meta:
+        managed = True
+        db_table = 'FACT_DETALLE'
+
+
 class HojaPicking(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
     oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
