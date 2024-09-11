@@ -34,6 +34,13 @@ router.register(r'Depositos', views.SI_DepositosViewSet)
 router.register(r'TipoAlmacen', views.SI_TipoAlmacenViewSet)
 router.register(r'Sector', views.SI_SectorViewSet)
 router.register(r'StocksInventario', views.StocksInventarioViewSet)
+router.register(r'GuiasRemision', views.GuiasRemisionViewSet)
+router.register(r'GR_Descripcion', views.GR_DescripcionViewSet)
+router.register(r'GuiasRemision_OC', views.GuiasRemision_OCViewSet)
+router.register(r'GR_Descripcion_OC', views.GR_Descripcion_OCViewSet)
+router.register(r'GR_Busqueda', views.GR_BusquedaViewSet)
+router.register(r'Fact_Busqueda', views.Fact_BusquedaViewSet)
+
 
 urlpatterns = [
     path('', include(router.urls)),

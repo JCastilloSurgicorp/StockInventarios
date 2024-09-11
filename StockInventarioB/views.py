@@ -202,3 +202,111 @@ class StocksInventarioViewSet(viewsets.ModelViewSet):
     queryset = StocksInventario.objects.all().order_by('id')
     serializer_class = StocksInventarioSerializer
     permission_classes = get_permissions
+
+class GuiasRemisionViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = GuiasRemision.objects.all().order_by('id')
+    serializer_class = GuiasRemisionSerializer
+    permission_classes = get_permissions
+
+class GR_DescripcionViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = GR_Descripcion.objects.all().order_by('id')
+    serializer_class = GR_DescripcionSerializer
+    permission_classes = get_permissions
+
+class GuiasRemision_OCViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = GuiasRemision_OC.objects.all().order_by('id')
+    serializer_class = GuiasRemision_OCSerializer
+    permission_classes = get_permissions
+
+class GR_Descripcion_OCViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = GR_Descripcion_OC.objects.all().order_by('id')
+    serializer_class = GR_Descripcion_OCSerializer
+    permission_classes = get_permissions
+
+class GR_BusquedaViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = GR_Busqueda.objects.all().order_by('id')
+    serializer_class = GR_BusquedaSerializer
+    permission_classes = get_permissions
+
+class Fact_BusquedaViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = Fact_Busqueda.objects.all().order_by('id')
+    serializer_class = Fact_BusquedaSerializer
+    permission_classes = get_permissions

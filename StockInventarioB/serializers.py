@@ -58,3 +58,38 @@ class StocksInventarioSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = StocksInventario
         fields = '__all__'
+
+class GuiasRemisionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GuiasRemision
+        fields = '__all__'
+
+class GR_DescripcionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GR_Descripcion
+        fields = '__all__'
+
+class GuiasRemision_OCSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GuiasRemision_OC
+        fields = '__all__'
+
+class GR_Descripcion_OCSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GR_Descripcion_OC
+        fields = '__all__'
+
+class GR_BusquedaSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GR_Busqueda
+        fields = '__all__'
+
+class Fact_BusquedaSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Fact_Busqueda
+        fields = '__all__'
+
+class HojaPickingSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = HojaPicking
+        fields = '__all__'
