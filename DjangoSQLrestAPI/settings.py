@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import mimetypes
+
+mimetypes.add_type("text/javascript", ".js", True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -149,7 +152,8 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'PAGE_SIZE': 100,
     'DEFAULT_RENDERER_CLASSES': [
+        #'rest_framework.renderers.TemplateHTMLRenderer',
         'rest_framework.renderers.AdminRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        
     ] 
 }
