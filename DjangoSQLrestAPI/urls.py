@@ -49,4 +49,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/', include_docs_urls(title='SI Api Documentation')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + debug_toolbar_urls()
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) #+ debug_toolbar_urls()
