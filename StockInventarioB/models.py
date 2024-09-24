@@ -277,6 +277,7 @@ class HojaPicking(models.Model):
     firma_distribucion = models.CharField(db_column='FIRMA_DISTRIBUCION', max_length=60, blank=True, null=True)
     fecha_distribucion = models.DateTimeField(db_column='FECHA_DISTRIBUCION', blank=True, null=True)
     lima_provincia = models.IntegerField(db_column='LIMA_PROVINCIA', blank=True, null=True)
+    ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia
