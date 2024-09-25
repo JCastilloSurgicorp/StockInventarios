@@ -235,6 +235,7 @@ class Fact_Busqueda(models.Model):
 
 
 class Fact_Detalle(models.Model):
+    id_fact = models.IntegerField(db_column='ID_FACT', blank=True, null=True)
     nro_fact = models.CharField(db_column='NUMERO_FACTURA', max_length=20, blank=True, null=True)
     fecha_emision = models.DateField(db_column='FECHA_EMISION', blank=True, null=True)
     monto = models.IntegerField(db_column='MONTO', blank=True, null=True)
