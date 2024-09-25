@@ -235,7 +235,7 @@ class Fact_Busqueda(models.Model):
 
 
 class Fact_Detalle(models.Model):
-    id_fact = models.IntegerField(db_column='ID_FACT', blank=True, null=True)
+    id_fact = models.IntegerField(db_column='ID_FACT', blank=True, null=False)
     nro_fact = models.CharField(db_column='NUMERO_FACTURA', max_length=20, blank=True, null=True)
     fecha_emision = models.DateField(db_column='FECHA_EMISION', blank=True, null=True)
     monto = models.IntegerField(db_column='MONTO', blank=True, null=True)
@@ -255,7 +255,9 @@ class Fact_Detalle(models.Model):
     sede = models.CharField(db_column='SEDE', max_length=60, blank=True, null=True)
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
     oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
-    
+    tipo_cliente = models.CharField(db_column='TIPO_CLIENTE', max_length=60, blank=True, null=True)
+    usuario_registro = models.CharField(db_column='USUARIO_REGISTRO', max_length=60, blank=True, null=True)
+
     def __str__(self):
         return self.nro_fact
     
