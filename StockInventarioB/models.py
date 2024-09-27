@@ -38,9 +38,23 @@ class SI_Grupo(models.Model):
         managed = True
         db_table = 'SI_Grupo'
 
+
+class HP_Proveedor(models.Model):
+    producto = models.CharField(db_column='PRODUCTO', max_length=30, blank=True, null=True)
+    proveedor = models.CharField(db_column='PROVEEDOR', max_length=120, blank=True, null=True)
+   
+    def __str__(self):
+        return self.proveedor
+    
+    class Meta:
+        managed = True
+        db_table = 'HP_PROVEEDOR'
+
+
 class SI_Productos(models.Model):
     producto = models.CharField(db_column='PRODUCTO', max_length=30)
     descripcion_producto = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True)
+    proveedor_id = models.ForeignKey(HP_Proveedor, on_delete=models.DO_NOTHING)
     grupo_id = models.ForeignKey(SI_Grupo, on_delete=models.DO_NOTHING) 
 
     def __str__(self):
@@ -151,7 +165,8 @@ class GuiasRemision(models.Model):
 
 class GR_Descripcion(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
-    prod_id = models.ForeignKey(SI_Productos, on_delete=models.DO_NOTHING, db_column='PRODUCTO_ID')
+    prod = models.CharField(db_column='PRODUCTO', max_length=20, blank=True, null=True)
+    proveedor = models.CharField(db_column='PROVEEDOR', max_length=150, blank=True, null=True)
     sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
     nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
     cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
@@ -191,7 +206,7 @@ class GuiasRemision_OC(models.Model):
 
 class GR_Descripcion_OC(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
-    prod_id = models.ForeignKey(SI_Productos, on_delete=models.DO_NOTHING, db_column='PRODUCTO_ID')
+    prod = models.CharField(db_column='PRODUCTO', max_length=20, blank=True, null=True)
     sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
     nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
     cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
@@ -288,3 +303,4 @@ class HojaPicking(models.Model):
     class Meta:
         managed = True
         db_table = 'HOJA_PICKING'
+
