@@ -1,9 +1,11 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
+from django.shortcuts import render
 from .serializers import *
 from .models import *
 
-
+def Question(request):
+    return render(request, 'SIB/index.html')
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
     """

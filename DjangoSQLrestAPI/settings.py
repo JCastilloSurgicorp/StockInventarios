@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hr6lr^50(g^-*yp3=w(%@@krice_qf@+hkfiq%e_6tp+*+pe#!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'coreapi',
     'StockInventarioB.apps.StockinventariobConfig',
+    'AsistVirtual',
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,5 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.AdminRenderer',
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-
     ] 
 }

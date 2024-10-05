@@ -54,7 +54,7 @@ class HP_Proveedor(models.Model):
 class SI_Productos(models.Model):
     producto = models.CharField(db_column='PRODUCTO', max_length=30)
     descripcion_producto = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True)
-    proveedor_id = models.ForeignKey(HP_Proveedor, on_delete=models.DO_NOTHING)
+    proveedor_id = models.ForeignKey(HP_Proveedor, on_delete=models.DO_NOTHING, db_column='PROVEEDOR_ID')
     grupo_id = models.ForeignKey(SI_Grupo, on_delete=models.DO_NOTHING) 
 
     def __str__(self):
@@ -132,7 +132,8 @@ class StocksInventario(models.Model):
     fecha_vigencia_lote = models.DateField(db_column='FECHA_VIGENCIA_LOTE', blank=True, null=True)
     tipo_almacenaje = models.CharField(db_column='TIPO_ALMACENAJE', max_length=50, blank=True, null=True)
     registro_sanitario = models.CharField(db_column='REGISTRO_SANITARIO', max_length=32, blank=True, null=True)
-    fecha_vigencia_regsan = models.DateField(db_column='FECHA_VIGENCIA_REGSAN', blank=True, null=True)  
+    fecha_vigencia_regsan = models.DateField(db_column='FECHA_VIGENCIA_REGSAN', blank=True, null=True) 
+    descr_deposito = models.CharField(db_column='DESCRIPCION_DEPOSITO', max_length=60, blank=True, null=True) 
 
     def __str__(self):
         return self.lote
@@ -140,6 +141,24 @@ class StocksInventario(models.Model):
     class Meta:
         managed = True
         db_table = 'STOCKS_INVENTARIO'
+
+
+class SI_UpdateAudit(models.Model):
+    producto = models.CharField(db_column='PRODUCTO', max_length=30)
+    tipo_producto = models.CharField(db_column='TIPO_PRODUCTO', max_length=6, blank=True)
+    lote = models.CharField(db_column='LOTE', max_length=30)
+    descr_deposito = models.CharField(db_column='DESCRIPCION_DEPOSITO', max_length=60, blank=True, null=True)
+    sector = models.CharField(db_column='SECTOR', max_length=15, blank=True)
+    stock_old = models.DecimalField(db_column='STOCK_OLD', max_digits=18, decimal_places=2, blank=True, null=True)
+    stock_new = models.DecimalField(db_column='STOCK_NEW', max_digits=18, decimal_places=2, blank=True, null=True)
+    fecha_hora = models.DateTimeField(db_column='FECHA_HORA', blank=True, null=True)
+
+    def __str__(self):
+        return self.lote
+    
+    class Meta:
+        managed = True
+        db_table = 'SI_UPDATE_AUDIT'
 
 
 class GuiasRemision(models.Model):
@@ -207,6 +226,7 @@ class GuiasRemision_OC(models.Model):
 class GR_Descripcion_OC(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
     prod = models.CharField(db_column='PRODUCTO', max_length=20, blank=True, null=True)
+    proveedor = models.CharField(db_column='PROVEEDOR', max_length=150, blank=True, null=True)
     sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
     nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
     cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
@@ -272,6 +292,7 @@ class Fact_Detalle(models.Model):
     oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
     tipo_cliente = models.CharField(db_column='TIPO_CLIENTE', max_length=60, blank=True, null=True)
     usuario_registro = models.CharField(db_column='USUARIO_REGISTRO', max_length=60, blank=True, null=True)
+    zona = models.CharField(db_column='ZONA', max_length=60, blank=True, null=True)
 
     def __str__(self):
         return self.nro_fact
@@ -279,6 +300,21 @@ class Fact_Detalle(models.Model):
     class Meta:
         managed = True
         db_table = 'FACT_DETALLE'
+
+
+class Fact_UpdateAudit(models.Model):
+    id_fact = models.IntegerField(db_column='ID_FACT', blank=True, null=False)
+    nro_fact = models.CharField(db_column='NUMERO_FACTURA', max_length=20, blank=True, null=True)
+    estado_old = models.TextField(db_column='ESTADO_OLD', blank=True, null=True)
+    estado_new = models.TextField(db_column='ESTADO_NEW', blank=True, null=True)
+    fecha_hora = models.DateTimeField(db_column='FECHA_HORA', blank=True, null=True)
+
+    def __str__(self):
+        return self.nro_fact
+    
+    class Meta:
+        managed = True
+        db_table = 'FACT_UPDATE_AUDIT'
 
 
 class HojaPicking(models.Model):
