@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'coreapi',
     'StockInventarioB.apps.StockinventariobConfig',
     'AsistVirtual',
+    'flet_django',
 ]
 
 MIDDLEWARE = [
