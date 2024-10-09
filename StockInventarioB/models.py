@@ -54,8 +54,8 @@ class HP_Proveedor(models.Model):
 class SI_Productos(models.Model):
     producto = models.CharField(db_column='PRODUCTO', max_length=30)
     descripcion_producto = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True)
-    proveedor_id = models.ForeignKey(HP_Proveedor, on_delete=models.DO_NOTHING, db_column='PROVEEDOR_ID')
-    grupo_id = models.ForeignKey(SI_Grupo, on_delete=models.DO_NOTHING) 
+    proveedor_id = models.ForeignKey(HP_Proveedor, on_delete=models.DO_NOTHING, db_column='PROVEEDOR_ID', blank=True)
+    grupo = models.CharField(db_column='GRUPO', max_length=60, blank=True, null=True)
 
     def __str__(self):
         return self.producto

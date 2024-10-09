@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'coreapi',
     'StockInventarioB.apps.StockinventariobConfig',
     'AsistVirtual',
+    'SI_Flet',
     'flet_django',
 ]
 
@@ -141,7 +142,7 @@ INTERNAL_IPS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = 'C:\inetpub\wwwroot\DjangoAPI\StockInventarios\DjangoSQLrestAPI\static'
 
 # Default primary key field type
