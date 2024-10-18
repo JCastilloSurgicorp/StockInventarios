@@ -54,7 +54,7 @@ class HP_Proveedor(models.Model):
 class SI_Productos(models.Model):
     producto = models.CharField(db_column='PRODUCTO', max_length=30)
     descripcion_producto = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True)
-    proveedor_id = models.ForeignKey(HP_Proveedor, on_delete=models.DO_NOTHING, db_column='PROVEEDOR_ID', blank=True)
+    proveedor_id = models.ForeignKey(HP_Proveedor, on_delete=models.DO_NOTHING, db_column='PROVEEDOR_ID', default=5502)
     grupo = models.CharField(db_column='GRUPO', max_length=60, blank=True, null=True)
 
     def __str__(self):
@@ -87,7 +87,7 @@ class SI_Empresa(models.Model):
 
 
 class SI_Depositos(models.Model):
-    empr_id = models.ForeignKey(SI_Empresa, on_delete=models.DO_NOTHING)
+    empr_id = models.ForeignKey(SI_Empresa, on_delete=models.DO_NOTHING, default=4)
     deposito = models.CharField(db_column='DEPOSITO', max_length=15)  
     descripcion_deposito = models.CharField(db_column='DESCRIPCION_DEPOSITO', max_length=60, blank=True, null=True) 
 
@@ -144,13 +144,15 @@ class StocksInventario(models.Model):
 
 
 class SI_UpdateAudit(models.Model):
-    producto = models.CharField(db_column='PRODUCTO', max_length=30)
-    tipo_producto = models.CharField(db_column='TIPO_PRODUCTO', max_length=6, blank=True)
-    lote = models.CharField(db_column='LOTE', max_length=30)
-    descr_deposito = models.CharField(db_column='DESCRIPCION_DEPOSITO', max_length=60, blank=True, null=True)
-    sector = models.CharField(db_column='SECTOR', max_length=15, blank=True)
-    stock_old = models.DecimalField(db_column='STOCK_OLD', max_digits=18, decimal_places=2, blank=True, null=True)
-    stock_new = models.DecimalField(db_column='STOCK_NEW', max_digits=18, decimal_places=2, blank=True, null=True)
+    producto = models.CharField(db_column='PRODUCTO', max_length=30, blank=True, null=True)
+    tipo_producto = models.CharField(db_column='TIPO_PRODUCTO', max_length=6, blank=True, null=True)
+    grupo = models.CharField(db_column='GRUPO', max_length=60, blank=True, null=True)
+    linea = models.CharField(db_column='LINEA', max_length=60, blank=True, null=True)
+    lote = models.CharField(db_column='LOTE', max_length=30, blank=True, null=True)
+    deposito = models.CharField(db_column='DEPOSITO', max_length=15, blank=True, null=True)
+    sector = models.CharField(db_column='SECTOR', max_length=15, blank=True, null=True)
+    estado_old = models.TextField(db_column='ESTADO_OLD', blank=True, null=True)
+    estado_new = models.TextField(db_column='ESTADO_NEW', blank=True, null=True)
     fecha_hora = models.DateTimeField(db_column='FECHA_HORA', blank=True, null=True)
 
     def __str__(self):
@@ -340,3 +342,39 @@ class HojaPicking(models.Model):
         managed = True
         db_table = 'HOJA_PICKING'
 
+
+class Pend_Guias(models.Model):
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
+    repr = models.CharField(db_column='REPRESENTANTE', max_length=60, blank=True, null=True)
+    nombre_cliente = models.CharField(db_column='NOMBRE_CLIENTE', max_length=150, blank=True, null=True)
+    zona = models.CharField(db_column='ZONA', max_length=60, blank=True, null=True)
+    tipo_venta = models.CharField(db_column='TIPO_VENTA', max_length=60, blank=True, null=True)
+    empr = models.CharField(db_column='EMPRESA', max_length=10, blank=True, null=True)
+    f_guia = models.DateField(db_column='FECHA_GUIA', blank=True, null=True)
+    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)    
+    
+    def __str__(self):
+        return self.nro_guia
+    
+    class Meta:
+        managed = True
+        db_table = 'PEND_GUIAS'
+
+
+class Pend_Items(models.Model):
+    id_concat = models.CharField(db_column='ID_CONCAT', max_length=40, blank=True, null=True)
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
+    item = models.IntegerField(db_column='ITEM', blank=True, null=True)  
+    prod = models.CharField(db_column='PRODUCTO', max_length=20, blank=True, null=True)
+    desc_prod = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True)
+    cant = models.IntegerField(db_column='CANTIDAD', blank=True, null=True) 
+    lote = models.CharField(db_column='LOTE', max_length=30, blank=True, null=True)
+    v_lote = models.DateField(db_column='VENCIMIENTO_LOTE', blank=True, null=True)
+    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
+    
+    def __str__(self):
+        return self.nro_guia
+    
+    class Meta:
+        managed = True
+        db_table = 'PEND_ITEMS'
