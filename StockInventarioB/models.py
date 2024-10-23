@@ -133,7 +133,8 @@ class StocksInventario(models.Model):
     tipo_almacenaje = models.CharField(db_column='TIPO_ALMACENAJE', max_length=50, blank=True, null=True)
     registro_sanitario = models.CharField(db_column='REGISTRO_SANITARIO', max_length=32, blank=True, null=True)
     fecha_vigencia_regsan = models.DateField(db_column='FECHA_VIGENCIA_REGSAN', blank=True, null=True) 
-    descr_deposito = models.CharField(db_column='DESCRIPCION_DEPOSITO', max_length=60, blank=True, null=True) 
+    descr_deposito = models.CharField(db_column='DESCRIPCION_DEPOSITO', max_length=60, blank=True, null=True)
+    codigo_qr = models.CharField(db_column='CODIGO_QR', max_length=150, blank=True, null=True) 
 
     def __str__(self):
         return self.lote
@@ -175,6 +176,7 @@ class GuiasRemision(models.Model):
     estado = models.CharField(db_column='ESTADO', max_length=3, blank=True, null=True)
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
     obs = models.CharField(db_column='OBSERVACION', max_length=500, blank=True, null=True)
+    tipo_pedido = models.CharField(db_column='TIPO_PEDIDO', max_length=50, blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia
@@ -193,7 +195,9 @@ class GR_Descripcion(models.Model):
     cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
     lote = models.CharField(db_column='LOTE', max_length=30, blank=True, null=True)
     venc_lote = models.DateField(db_column='VENCIMIENTO_LOTE', blank=True, null=True)
-    
+    empr_id = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True)
+    ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
+
     def __str__(self):
         return self.nro_item
     
@@ -216,6 +220,7 @@ class GuiasRemision_OC(models.Model):
     obs = models.CharField(db_column='OBSERVACION', max_length=500, blank=True, null=True)
     oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
     nro_proceso = models.CharField(db_column='NRO_PROCESO', max_length=20, blank=True, null=True)
+    tipo_pedido = models.CharField(db_column='TIPO_PEDIDO', max_length=50, blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia
@@ -234,6 +239,8 @@ class GR_Descripcion_OC(models.Model):
     cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
     lote = models.CharField(db_column='LOTE', max_length=30, blank=True, null=True)
     venc_lote = models.DateField(db_column='VENCIMIENTO_LOTE', blank=True, null=True)
+    empr_id = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True)
+    ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
     
     def __str__(self):
         return self.nro_item
@@ -334,6 +341,7 @@ class HojaPicking(models.Model):
     fecha_distribucion = models.DateTimeField(db_column='FECHA_DISTRIBUCION', blank=True, null=True)
     lima_provincia = models.IntegerField(db_column='LIMA_PROVINCIA', blank=True, null=True)
     ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
+    empr_id = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True) 
     
     def __str__(self):
         return self.nro_guia
@@ -367,7 +375,7 @@ class Pend_Items(models.Model):
     item = models.IntegerField(db_column='ITEM', blank=True, null=True)  
     prod = models.CharField(db_column='PRODUCTO', max_length=20, blank=True, null=True)
     desc_prod = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True)
-    cant = models.IntegerField(db_column='CANTIDAD', blank=True, null=True) 
+    cant_pend = models.IntegerField(db_column='CANTIDAD_PENDIENTE', blank=True, null=True) 
     lote = models.CharField(db_column='LOTE', max_length=30, blank=True, null=True)
     v_lote = models.DateField(db_column='VENCIMIENTO_LOTE', blank=True, null=True)
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
@@ -378,3 +386,20 @@ class Pend_Items(models.Model):
     class Meta:
         managed = True
         db_table = 'PEND_ITEMS'
+
+
+class Pend_Update_Audit(models.Model):
+    id_concat = models.CharField(db_column='ID_CONCAT', max_length=40, blank=True, null=True)
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
+    item = models.IntegerField(db_column='ITEM', blank=True, null=True)
+    accion = models.CharField(db_column='ACCION', max_length=20, blank=True, null=True)
+    cant_pend_old = models.IntegerField(db_column='CANT_PEND_OLD', blank=True, null=True) 
+    cant_pend_new = models.IntegerField(db_column='CANT_PEND_NEW', blank=True, null=True) 
+    f_hora = models.DateTimeField(db_column='FECHA_HORA', blank=True, null=True)
+    
+    def __str__(self):
+        return self.nro_guia
+    
+    class Meta:
+        managed = True
+        db_table = 'PEND_UPDATE_AUDIT'
