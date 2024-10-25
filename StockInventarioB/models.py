@@ -197,6 +197,7 @@ class GR_Descripcion(models.Model):
     venc_lote = models.DateField(db_column='VENCIMIENTO_LOTE', blank=True, null=True)
     empr_id = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True)
     ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
+    id_concat = models.BigIntegerField(db_column='ID_CONCAT', blank=True, null=True)
 
     def __str__(self):
         return self.nro_item
@@ -241,6 +242,7 @@ class GR_Descripcion_OC(models.Model):
     venc_lote = models.DateField(db_column='VENCIMIENTO_LOTE', blank=True, null=True)
     empr_id = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True)
     ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
+    id_concat = models.BigIntegerField(db_column='ID_CONCAT', blank=True, null=True)
     
     def __str__(self):
         return self.nro_item
@@ -340,7 +342,6 @@ class HojaPicking(models.Model):
     firma_distribucion = models.CharField(db_column='FIRMA_DISTRIBUCION', max_length=60, blank=True, null=True)
     fecha_distribucion = models.DateTimeField(db_column='FECHA_DISTRIBUCION', blank=True, null=True)
     lima_provincia = models.IntegerField(db_column='LIMA_PROVINCIA', blank=True, null=True)
-    ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
     empr_id = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True) 
     
     def __str__(self):
@@ -359,7 +360,8 @@ class Pend_Guias(models.Model):
     tipo_venta = models.CharField(db_column='TIPO_VENTA', max_length=60, blank=True, null=True)
     empr = models.CharField(db_column='EMPRESA', max_length=10, blank=True, null=True)
     f_guia = models.DateField(db_column='FECHA_GUIA', blank=True, null=True)
-    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)    
+    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True) 
+    cant_pend = models.IntegerField(db_column='CANT_PEND_TOTAL', blank=True, null=True)    
     
     def __str__(self):
         return self.nro_guia
