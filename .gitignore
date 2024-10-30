@@ -10,8 +10,5 @@
 # Ignora el cache de python de SIB migrations
 /StockInventarioB/migrations/__pycache__
 
-# Ignora el virtual enviroment creado para correr flet
-/myenv
-
 # Ignora el sqlite que se crea por defecto
 /db.sqlite3
