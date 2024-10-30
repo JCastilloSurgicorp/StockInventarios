@@ -123,6 +123,7 @@ class SI_Sector(models.Model):
 
 class StocksInventario(models.Model):
     prod_id = models.ForeignKey(SI_Productos, on_delete=models.DO_NOTHING)
+    producto = models.CharField(db_column='PRODUCTO', max_length=30, blank=True, null=True)
     tipoProd_id = models.ForeignKey(SI_TipoProductos, on_delete=models.DO_NOTHING)
     dep_id = models.ForeignKey(SI_Depositos, on_delete=models.DO_NOTHING)
     sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING) 
