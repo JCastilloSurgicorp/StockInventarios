@@ -309,6 +309,24 @@ class Fact_BusquedaViewSet(viewsets.ModelViewSet):
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
     
-    queryset = Fact_Busqueda.objects.all().order_by('id')
+    queryset = Fact_Busqueda.objects.all().order_by('-id')
     serializer_class = Fact_BusquedaSerializer
+    permission_classes = get_permissions
+
+class HojaPickingViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = HojaPicking.objects.all().order_by('-id')
+    serializer_class = HojaPickingSerializer
     permission_classes = get_permissions

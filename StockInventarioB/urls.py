@@ -20,6 +20,7 @@ router.register(r'GuiasRemision_OC', views.GuiasRemision_OCViewSet)
 router.register(r'GR_Descripcion_OC', views.GR_Descripcion_OCViewSet)
 router.register(r'GR_Busqueda', views.GR_BusquedaViewSet)
 router.register(r'Fact_Busqueda', views.Fact_BusquedaViewSet)
+router.register(r'Hoja_Picking', views.HojaPickingViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

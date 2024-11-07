@@ -178,6 +178,9 @@ class GuiasRemision(models.Model):
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
     obs = models.CharField(db_column='OBSERVACION', max_length=500, blank=True, null=True)
     tipo_pedido = models.CharField(db_column='TIPO_PEDIDO', max_length=50, blank=True, null=True)
+    paciente = models.CharField(db_column='PACIENTE', max_length=60, blank=True, null=True)
+    ruc_cliente = models.CharField(db_column='RUC_CLIENTE', max_length=20, blank=True, null=True)
+    kits_guia = models.CharField(db_column='KITS_GUIA', max_length=200, blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia
@@ -199,6 +202,8 @@ class GR_Descripcion(models.Model):
     empr_id = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True)
     ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
     id_concat = models.BigIntegerField(db_column='ID_CONCAT', blank=True, null=True)
+    kits_items = models.CharField(db_column='KITS_ITEM', max_length=40, blank=True, null=True)
+    codigo_qr = models.CharField(db_column='CODIGO_QR', max_length=150, blank=True, null=True) 
 
     def __str__(self):
         return self.nro_item
@@ -223,6 +228,9 @@ class GuiasRemision_OC(models.Model):
     oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
     nro_proceso = models.CharField(db_column='NRO_PROCESO', max_length=20, blank=True, null=True)
     tipo_pedido = models.CharField(db_column='TIPO_PEDIDO', max_length=50, blank=True, null=True)
+    paciente = models.CharField(db_column='PACIENTE', max_length=60, blank=True, null=True)
+    ruc_cliente = models.CharField(db_column='RUC_CLIENTE', max_length=20, blank=True, null=True)
+    kits_guia = models.CharField(db_column='KITS_GUIA', max_length=200, blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia
@@ -244,6 +252,8 @@ class GR_Descripcion_OC(models.Model):
     empr_id = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True)
     ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
     id_concat = models.BigIntegerField(db_column='ID_CONCAT', blank=True, null=True)
+    kits_items = models.CharField(db_column='KITS_ITEM', max_length=40, blank=True, null=True)
+    codigo_qr = models.CharField(db_column='CODIGO_QR', max_length=150, blank=True, null=True) 
     
     def __str__(self):
         return self.nro_item
@@ -265,6 +275,22 @@ class GR_Busqueda(models.Model):
     class Meta:
         managed = True
         db_table = 'GR_BUSQUEDA'
+
+
+class GR_UpdateAudit(models.Model):
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
+    empresa = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True)
+    nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
+    estado_old = models.TextField(db_column='ESTADO_OLD', blank=True, null=True)
+    estado_new = models.TextField(db_column='ESTADO_NEW', blank=True, null=True)
+    fecha_hora = models.DateTimeField(db_column='FECHA_HORA', blank=True, null=True)
+
+    def __str__(self):
+        return self.nro_fact
+    
+    class Meta:
+        managed = True
+        db_table = 'GR_UPDATE_AUDIT'
 
 
 class Fact_Busqueda(models.Model):
