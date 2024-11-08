@@ -18,6 +18,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(HP_Proveedor)
 admin.site.register(SI_Productos)
 admin.site.register(SI_Grupo)
 admin.site.register(SI_Linea)
@@ -33,3 +34,7 @@ admin.site.register(GuiasRemision_OC)
 admin.site.register(GR_Descripcion_OC)
 admin.site.register(GR_Busqueda)
 admin.site.register(Fact_Busqueda)
+admin.site.register(Fact_Detalle)
+admin.site.register(HojaPicking)
+admin.site.register(Pend_Guias)
+admin.site.register(Pend_Items)

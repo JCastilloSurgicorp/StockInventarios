@@ -142,8 +142,8 @@ INTERNAL_IPS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = 'C:\inetpub\wwwroot\DjangoAPI\StockInventarios\DjangoSQLrestAPI\static'
+STATIC_URL = '/static/'
+STATIC_ROOT = 'C:/Users/srvcaminitos/Documents/DjangoAPI/StockInventarios/DjangoSQLrestAPI/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -154,7 +154,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'PAGE_SIZE': 100,
+    'PAGE_SIZE': 200,
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.AdminRenderer',
         'rest_framework.renderers.JSONRenderer',

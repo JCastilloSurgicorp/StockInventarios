@@ -268,6 +268,8 @@ class GR_Busqueda(models.Model):
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
     fecha_guia = models.DateField(db_column='FECHA_GUIA', blank=True, null=True)
     oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
+    fecha_cirugia = models.DateField(db_column='FECHA_CIRUGIA', blank=True, null=True)
+    zona = models.CharField(db_column='ZONA', max_length=60, blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia

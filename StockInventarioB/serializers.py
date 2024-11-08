@@ -24,6 +24,11 @@ class SI_GrupoSerializer(serializers.HyperlinkedModelSerializer):
         model = SI_Grupo
         fields = '__all__'
 
+class HP_ProveedorSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = HP_Proveedor
+        fields = '__all__'
+
 class SI_ProductosSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SI_Productos
@@ -89,7 +94,22 @@ class Fact_BusquedaSerializer(serializers.HyperlinkedModelSerializer):
         model = Fact_Busqueda
         fields = '__all__'
 
+class Fact_DetalleSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Fact_Detalle
+        fields = '__all__'
+
 class HojaPickingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = HojaPicking
+        fields = '__all__'
+
+class Pend_GuiasSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Pend_Guias
+        fields = '__all__'
+
+class Pend_ItemsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Pend_Items
         fields = '__all__'

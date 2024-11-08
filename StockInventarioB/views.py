@@ -79,6 +79,24 @@ class SI_GrupoViewSet(viewsets.ModelViewSet):
     serializer_class = SI_GrupoSerializer
     permission_classes = get_permissions
 
+class HP_ProveedorViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = HP_Proveedor.objects.all().order_by('id')
+    serializer_class = HP_ProveedorSerializer
+    permission_classes = get_permissions
+
 class SI_ProductosViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -115,15 +133,17 @@ class SI_TipoProductosViewSet(viewsets.ModelViewSet):
     serializer_class = SI_TipoProductosSerializer
     permission_classes = get_permissions
 
-class SI_EmpresaViewSet(viewsets.ModelViewSet):
+class SI_EmpresaViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows groups to be viewed 
     """
     def get_permissions(self):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
         if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'retrieve':
             permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [permissions.IsAdminUser]
@@ -313,6 +333,24 @@ class Fact_BusquedaViewSet(viewsets.ModelViewSet):
     serializer_class = Fact_BusquedaSerializer
     permission_classes = get_permissions
 
+class Fact_DetalleViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = Fact_Detalle.objects.all().order_by('-id')
+    serializer_class = Fact_DetalleSerializer
+    permission_classes = get_permissions
+
 class HojaPickingViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -329,4 +367,40 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
     
     queryset = HojaPicking.objects.all().order_by('-id')
     serializer_class = HojaPickingSerializer
+    permission_classes = get_permissions
+
+class Pend_GuiasViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = Pend_Guias.objects.all().order_by('-id')
+    serializer_class = Pend_GuiasSerializer
+    permission_classes = get_permissions
+
+class Pend_ItemsViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+    
+    queryset = Pend_Items.objects.all().order_by('-id')
+    serializer_class = Pend_ItemsSerializer
     permission_classes = get_permissions
