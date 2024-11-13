@@ -193,6 +193,7 @@ class GuiasRemision(models.Model):
 class GR_Descripcion(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
     prod = models.CharField(db_column='PRODUCTO', max_length=20, blank=True, null=True)
+    descr_prod = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True) 
     proveedor = models.CharField(db_column='PROVEEDOR', max_length=150, blank=True, null=True)
     sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
     nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
@@ -243,6 +244,7 @@ class GuiasRemision_OC(models.Model):
 class GR_Descripcion_OC(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
     prod = models.CharField(db_column='PRODUCTO', max_length=20, blank=True, null=True)
+    descr_prod = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True)
     proveedor = models.CharField(db_column='PROVEEDOR', max_length=150, blank=True, null=True)
     sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
     nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
@@ -359,7 +361,9 @@ class Fact_UpdateAudit(models.Model):
 
 class HojaPicking(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
+    gr_id = models.ForeignKey(GuiasRemision, on_delete=models.DO_NOTHING, db_column='GR_ID', null=True)
     oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
+    gr_oc_id = models.ForeignKey(GuiasRemision_OC, on_delete=models.DO_NOTHING, db_column='GR_OC_ID', null=True)
     status_picking = models.CharField(db_column='STATUS_PICKING', max_length=60, blank=True, null=True)
     atencion = models.CharField(db_column='ATENCION', max_length=60, blank=True, null=True)
     firma_atencion = models.CharField(db_column='FIRMA_ATENCION', max_length=60, blank=True, null=True)

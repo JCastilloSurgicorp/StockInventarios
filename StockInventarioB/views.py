@@ -1,5 +1,6 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
+import django_filters.rest_framework
 from django.shortcuts import render
 from .serializers import *
 from .models import *
@@ -199,6 +200,8 @@ class SI_SectorViewSet(viewsets.ModelViewSet):
         """
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'retrieve':
+            permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
@@ -235,12 +238,16 @@ class GuiasRemisionViewSet(viewsets.ModelViewSet):
         """
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'retrieve':
+            permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
     
     queryset = GuiasRemision.objects.all().order_by('id')
     serializer_class = GuiasRemisionSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['nro_guia']
     permission_classes = get_permissions
 
 class GR_DescripcionViewSet(viewsets.ModelViewSet):
@@ -253,12 +260,16 @@ class GR_DescripcionViewSet(viewsets.ModelViewSet):
         """
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'retrieve':
+            permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
     
-    queryset = GR_Descripcion.objects.all().order_by('id')
+    queryset = GR_Descripcion.objects.all().order_by('-id')
     serializer_class = GR_DescripcionSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['nro_guia']
     permission_classes = get_permissions
 
 class GuiasRemision_OCViewSet(viewsets.ModelViewSet):
@@ -271,12 +282,16 @@ class GuiasRemision_OCViewSet(viewsets.ModelViewSet):
         """
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'retrieve':
+            permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
     
-    queryset = GuiasRemision_OC.objects.all().order_by('id')
+    queryset = GuiasRemision_OC.objects.all().order_by('-id')
     serializer_class = GuiasRemision_OCSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['nro_guia']
     permission_classes = get_permissions
 
 class GR_Descripcion_OCViewSet(viewsets.ModelViewSet):
@@ -289,12 +304,16 @@ class GR_Descripcion_OCViewSet(viewsets.ModelViewSet):
         """
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'retrieve':
+            permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
     
     queryset = GR_Descripcion_OC.objects.all().order_by('id')
     serializer_class = GR_Descripcion_OCSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['nro_guia']
     permission_classes = get_permissions
 
 class GR_BusquedaViewSet(viewsets.ModelViewSet):
@@ -360,6 +379,8 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
         Instantiates and returns the list of permissions that this view requires.
         """
         if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'retrieve':
             permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [permissions.IsAdminUser]
