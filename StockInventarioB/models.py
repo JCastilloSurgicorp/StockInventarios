@@ -374,6 +374,10 @@ class HojaPicking(models.Model):
     distribucion = models.CharField(db_column='DISTRIBUCION', max_length=60, blank=True, null=True)
     firma_distribucion = models.CharField(db_column='FIRMA_DISTRIBUCION', max_length=60, blank=True, null=True)
     fecha_distribucion = models.DateTimeField(db_column='FECHA_DISTRIBUCION', blank=True, null=True)
+    cliente = models.CharField(db_column='NOMBRE_CLIENTE', max_length=150, blank=True, null=True)
+    motivo = models.CharField(db_column='MOTIVO_TRASLADO', max_length=50, blank=True, null=True)
+    tipo_pedido = models.CharField(db_column='TIPO_PEDIDO', max_length=50, blank=True, null=True)
+    ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
     lima_provincia = models.IntegerField(db_column='LIMA_PROVINCIA', blank=True, null=True)
     empr_id = models.ForeignKey(SI_Empresa, db_column='EMPRESA_ID', on_delete=models.DO_NOTHING, blank=True, null=True) 
     
