@@ -374,6 +374,12 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+    #def destroy(self, request, *args, **kwargs):
+        #obj = self.get_object()
+        #obj.delete()
+        #resp_msj = {'message':'Item has been deleted'}
+        #return super().destroy(request, *args, **kwargs)
+    
     def get_permissions(self):
         """
         Instantiates and returns the list of permissions that this view requires.
@@ -382,12 +388,16 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
             permission_classes = [permissions.IsAuthenticated]
         elif self.action == 'retrieve':
             permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'destroy':
+            permission_classes = [permissions.IsAdminUser]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
     
     queryset = HojaPicking.objects.all().order_by('-id')
     serializer_class = HojaPickingSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['id', 'nro_guia',  'status_picking', 'lima_provincia', 'empr_id', 'tipo_pedido', 'atencion', 'ubicacion_sector']
     permission_classes = get_permissions
 
 class Pend_GuiasViewSet(viewsets.ModelViewSet):

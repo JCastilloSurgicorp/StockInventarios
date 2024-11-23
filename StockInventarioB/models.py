@@ -179,6 +179,7 @@ class GuiasRemision(models.Model):
     obs = models.CharField(db_column='OBSERVACION', max_length=500, blank=True, null=True)
     tipo_pedido = models.CharField(db_column='TIPO_PEDIDO', max_length=50, blank=True, null=True)
     paciente = models.CharField(db_column='PACIENTE', max_length=60, blank=True, null=True)
+    fecha_cirugia = models.DateField(db_column='FECHA_CIRUGIA', blank=True, null=True)
     ruc_cliente = models.CharField(db_column='RUC_CLIENTE', max_length=20, blank=True, null=True)
     kits_guia = models.CharField(db_column='KITS_GUIA', max_length=200, blank=True, null=True)
     
@@ -230,6 +231,7 @@ class GuiasRemision_OC(models.Model):
     nro_proceso = models.CharField(db_column='NRO_PROCESO', max_length=20, blank=True, null=True)
     tipo_pedido = models.CharField(db_column='TIPO_PEDIDO', max_length=50, blank=True, null=True)
     paciente = models.CharField(db_column='PACIENTE', max_length=60, blank=True, null=True)
+    fecha_cirugia = models.DateField(db_column='FECHA_CIRUGIA', blank=True, null=True)
     ruc_cliente = models.CharField(db_column='RUC_CLIENTE', max_length=20, blank=True, null=True)
     kits_guia = models.CharField(db_column='KITS_GUIA', max_length=200, blank=True, null=True)
     
@@ -363,6 +365,7 @@ class HojaPicking(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
     gr_id = models.ForeignKey(GuiasRemision, on_delete=models.DO_NOTHING, db_column='GR_ID', null=True)
     oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
+    nro_proceso = models.CharField(db_column='NRO_PROCESO', max_length=20, blank=True, null=True)
     gr_oc_id = models.ForeignKey(GuiasRemision_OC, on_delete=models.DO_NOTHING, db_column='GR_OC_ID', null=True)
     status_picking = models.CharField(db_column='STATUS_PICKING', max_length=60, blank=True, null=True)
     atencion = models.CharField(db_column='ATENCION', max_length=60, blank=True, null=True)
