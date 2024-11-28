@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group, User
-from rest_framework import permissions, viewsets
-import django_filters.rest_framework
+from rest_framework import permissions, viewsets, filters
+import django_filters.rest_framework as df
 from django.shortcuts import render
 from .serializers import *
 from .models import *
@@ -18,12 +18,16 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'retrieve':
+            permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
     
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+    filter_backends = [df.DjangoFilterBackend, filters.OrderingFilter]
+    filterset_fields = ['id', 'username', 'first_name', 'last_name','email']
     permission_classes = get_permissions
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -246,7 +250,7 @@ class GuiasRemisionViewSet(viewsets.ModelViewSet):
     
     queryset = GuiasRemision.objects.all().order_by('id')
     serializer_class = GuiasRemisionSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [df.DjangoFilterBackend]
     filterset_fields = ['nro_guia']
     permission_classes = get_permissions
 
@@ -268,7 +272,7 @@ class GR_DescripcionViewSet(viewsets.ModelViewSet):
     
     queryset = GR_Descripcion.objects.all().order_by('-id')
     serializer_class = GR_DescripcionSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [df.DjangoFilterBackend]
     filterset_fields = ['nro_guia']
     permission_classes = get_permissions
 
@@ -290,7 +294,7 @@ class GuiasRemision_OCViewSet(viewsets.ModelViewSet):
     
     queryset = GuiasRemision_OC.objects.all().order_by('-id')
     serializer_class = GuiasRemision_OCSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [df.DjangoFilterBackend]
     filterset_fields = ['nro_guia']
     permission_classes = get_permissions
 
@@ -312,7 +316,7 @@ class GR_Descripcion_OCViewSet(viewsets.ModelViewSet):
     
     queryset = GR_Descripcion_OC.objects.all().order_by('id')
     serializer_class = GR_Descripcion_OCSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [df.DjangoFilterBackend]
     filterset_fields = ['nro_guia']
     permission_classes = get_permissions
 
@@ -374,12 +378,6 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    #def destroy(self, request, *args, **kwargs):
-        #obj = self.get_object()
-        #obj.delete()
-        #resp_msj = {'message':'Item has been deleted'}
-        #return super().destroy(request, *args, **kwargs)
-    
     def get_permissions(self):
         """
         Instantiates and returns the list of permissions that this view requires.
@@ -396,7 +394,7 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
     
     queryset = HojaPicking.objects.all().order_by('-id')
     serializer_class = HojaPickingSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [df.DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['id', 'nro_guia',  'status_picking', 'lima_provincia', 'empr_id', 'tipo_pedido', 'atencion', 'ubicacion_sector']
     permission_classes = get_permissions
 
