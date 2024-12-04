@@ -3,6 +3,7 @@ from rest_framework import permissions, viewsets, filters
 import django_filters.rest_framework as df
 from django.shortcuts import render
 from .serializers import *
+from .filters import *
 from .models import *
 
 def Question(request):
@@ -395,7 +396,7 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
     queryset = HojaPicking.objects.all().order_by('-id')
     serializer_class = HojaPickingSerializer
     filter_backends = [df.DjangoFilterBackend, filters.OrderingFilter]
-    filterset_fields = ['id', 'nro_guia',  'status_picking', 'lima_provincia', 'empr_id', 'tipo_pedido', 'atencion', 'ubicacion_sector']
+    filterset_class = HojaPickingFilter
     permission_classes = get_permissions
 
 class Pend_GuiasViewSet(viewsets.ModelViewSet):
