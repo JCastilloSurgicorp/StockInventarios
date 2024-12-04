@@ -196,7 +196,7 @@ class GR_Descripcion(models.Model):
     prod = models.CharField(db_column='PRODUCTO', max_length=20, blank=True, null=True)
     descr_prod = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True) 
     proveedor = models.CharField(db_column='PROVEEDOR', max_length=150, blank=True, null=True)
-    sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
+    sector = models.CharField(db_column='SECTOR', max_length=15, blank=True, null=True)
     nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
     cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
     lote = models.CharField(db_column='LOTE', max_length=30, blank=True, null=True)
@@ -248,7 +248,7 @@ class GR_Descripcion_OC(models.Model):
     prod = models.CharField(db_column='PRODUCTO', max_length=20, blank=True, null=True)
     descr_prod = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True)
     proveedor = models.CharField(db_column='PROVEEDOR', max_length=150, blank=True, null=True)
-    sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING, db_column='SECTOR_ID')
+    sector = models.CharField(db_column='SECTOR', max_length=15, blank=True, null=True)
     nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
     cantidad = models.DecimalField(db_column='CANTIDAD', max_digits=18, decimal_places=2, blank=True, null=True)
     lote = models.CharField(db_column='LOTE', max_length=30, blank=True, null=True)
@@ -337,6 +337,8 @@ class Fact_Detalle(models.Model):
     tipo_cliente = models.CharField(db_column='TIPO_CLIENTE', max_length=60, blank=True, null=True)
     usuario_registro = models.CharField(db_column='USUARIO_REGISTRO', max_length=60, blank=True, null=True)
     zona = models.CharField(db_column='ZONA', max_length=60, blank=True, null=True)
+    afecto_detr = models.CharField(db_column='AFECTO_DETRACCION', max_length=1, blank=True, null=True)
+    afecto_ret = models.CharField(db_column='AFECTO_RETENCION', max_length=1, blank=True, null=True)
 
     def __str__(self):
         return self.nro_fact
@@ -380,6 +382,7 @@ class HojaPicking(models.Model):
     cliente = models.CharField(db_column='NOMBRE_CLIENTE', max_length=150, blank=True, null=True)
     motivo = models.CharField(db_column='MOTIVO_TRASLADO', max_length=50, blank=True, null=True)
     tipo_pedido = models.CharField(db_column='TIPO_PEDIDO', max_length=50, blank=True, null=True)
+    sector = models.CharField(db_column='SECTOR', max_length=15, blank=True, null=True)
     ubicacion_sector = models.CharField(db_column='UBICACION_SECTOR', max_length=120, blank=True, null=True)
     lima_provincia = models.IntegerField(db_column='LIMA_PROVINCIA', blank=True, null=True)
     empr_id = models.ForeignKey(SI_Empresa, db_column='EMPRESA_ID', on_delete=models.DO_NOTHING, blank=True, null=True) 

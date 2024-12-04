@@ -385,9 +385,9 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
         elif self.action == 'retrieve':
-            permission_classes = [permissions.IsAuthenticated]
+            permission_classes = [permissions.DjangoModelPermissions]
         elif self.action == 'destroy':
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.DjangoModelPermissions]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
