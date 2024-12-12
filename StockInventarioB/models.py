@@ -124,6 +124,7 @@ class SI_Sector(models.Model):
 class StocksInventario(models.Model):
     prod_id = models.ForeignKey(SI_Productos, on_delete=models.DO_NOTHING)
     producto = models.CharField(db_column='PRODUCTO', max_length=30, blank=True, null=True)
+    descr_prod = models.CharField(db_column='DESCRIPCION_PRODUCTO', max_length=120, blank=True, null=True)
     tipoProd_id = models.ForeignKey(SI_TipoProductos, on_delete=models.DO_NOTHING)
     dep_id = models.ForeignKey(SI_Depositos, on_delete=models.DO_NOTHING)
     sector_id = models.ForeignKey(SI_Sector, on_delete=models.DO_NOTHING) 
@@ -138,7 +139,7 @@ class StocksInventario(models.Model):
     codigo_qr = models.CharField(db_column='CODIGO_QR', max_length=150, blank=True, null=True) 
 
     def __str__(self):
-        return self.lote
+        return self.producto
     
     class Meta:
         managed = True
@@ -182,6 +183,7 @@ class GuiasRemision(models.Model):
     fecha_cirugia = models.DateField(db_column='FECHA_CIRUGIA', blank=True, null=True)
     ruc_cliente = models.CharField(db_column='RUC_CLIENTE', max_length=20, blank=True, null=True)
     kits_guia = models.CharField(db_column='KITS_GUIA', max_length=200, blank=True, null=True)
+    deposito = models.CharField(db_column='DEPOSITO', max_length=15, blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia
@@ -208,7 +210,7 @@ class GR_Descripcion(models.Model):
     codigo_qr = models.CharField(db_column='CODIGO_QR', max_length=150, blank=True, null=True) 
 
     def __str__(self):
-        return self.nro_item
+        return self.prod
     
     class Meta:
         managed = True
@@ -234,6 +236,7 @@ class GuiasRemision_OC(models.Model):
     fecha_cirugia = models.DateField(db_column='FECHA_CIRUGIA', blank=True, null=True)
     ruc_cliente = models.CharField(db_column='RUC_CLIENTE', max_length=20, blank=True, null=True)
     kits_guia = models.CharField(db_column='KITS_GUIA', max_length=200, blank=True, null=True)
+    deposito = models.CharField(db_column='DEPOSITO', max_length=15, blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia
@@ -260,7 +263,7 @@ class GR_Descripcion_OC(models.Model):
     codigo_qr = models.CharField(db_column='CODIGO_QR', max_length=150, blank=True, null=True) 
     
     def __str__(self):
-        return self.nro_item
+        return self.prod
     
     class Meta:
         managed = True
@@ -339,6 +342,7 @@ class Fact_Detalle(models.Model):
     zona = models.CharField(db_column='ZONA', max_length=60, blank=True, null=True)
     afecto_detr = models.CharField(db_column='AFECTO_DETRACCION', max_length=1, blank=True, null=True)
     afecto_ret = models.CharField(db_column='AFECTO_RETENCION', max_length=1, blank=True, null=True)
+    monto_soles = models.DecimalField(db_column='MONTO_SOLES', max_digits=18, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return self.nro_fact

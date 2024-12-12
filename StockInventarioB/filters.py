@@ -17,7 +17,6 @@ class HojaPickingFilter(django_filters.FilterSet):
             'empr_id':['exact'],
             'tipo_pedido':['exact'],
             'atencion':['exact', 'contains'], 
-            'fecha_atencion':['exact', 'lt', 'gt', 'range'], 
+            'fecha_atencion':['exact', 'lte', 'gte'], 
             'ubicacion_sector':['exact', 'contains'],
-        }
-        #fields = ['id', 'nro_guia',  'status_picking', 'lima_provincia', 'empr_id', 'tipo_pedido', 'atencion', 'fecha_atencion','ubicacion_sector']
+        }                                                                                                                                                                                                                                                                  

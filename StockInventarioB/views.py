@@ -20,9 +20,9 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
         elif self.action == 'retrieve':
-            permission_classes = [permissions.IsAuthenticated]
+            permission_classes = [permissions.DjangoModelPermissions]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.DjangoModelPermissions]
         return [permission() for permission in permission_classes]
     
     queryset = User.objects.all().order_by('-date_joined')
@@ -42,7 +42,7 @@ class GroupViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.DjangoModelPermissions]
         return [permission() for permission in permission_classes]
     
     queryset = Group.objects.all().order_by('name')
@@ -225,11 +225,15 @@ class StocksInventarioViewSet(viewsets.ModelViewSet):
         """
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'retrieve':
+            permission_classes = [permissions.DjangoModelPermissions]
+        elif self.action == 'destroy':
+            permission_classes = [permissions.DjangoModelPermissions]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
     
-    queryset = StocksInventario.objects.all().order_by('id')
+    queryset = StocksInventario.objects.all().order_by('-stock')
     serializer_class = StocksInventarioSerializer
     permission_classes = get_permissions
 
@@ -244,7 +248,9 @@ class GuiasRemisionViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
         elif self.action == 'retrieve':
-            permission_classes = [permissions.IsAuthenticated]
+            permission_classes = [permissions.DjangoModelPermissions]
+        elif self.action == 'destroy':
+            permission_classes = [permissions.DjangoModelPermissions]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
@@ -266,7 +272,9 @@ class GR_DescripcionViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
         elif self.action == 'retrieve':
-            permission_classes = [permissions.IsAuthenticated]
+            permission_classes = [permissions.DjangoModelPermissions]
+        elif self.action == 'destroy':
+            permission_classes = [permissions.DjangoModelPermissions]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
@@ -274,7 +282,7 @@ class GR_DescripcionViewSet(viewsets.ModelViewSet):
     queryset = GR_Descripcion.objects.all().order_by('-id')
     serializer_class = GR_DescripcionSerializer
     filter_backends = [df.DjangoFilterBackend]
-    filterset_fields = ['nro_guia']
+    filterset_fields = ['id','nro_guia']
     permission_classes = get_permissions
 
 class GuiasRemision_OCViewSet(viewsets.ModelViewSet):
@@ -310,7 +318,9 @@ class GR_Descripcion_OCViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
         elif self.action == 'retrieve':
-            permission_classes = [permissions.IsAuthenticated]
+            permission_classes = [permissions.DjangoModelPermissions]
+        elif self.action == 'destroy':
+            permission_classes = [permissions.DjangoModelPermissions]
         else:
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
@@ -385,17 +395,13 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
         """
         if self.action == 'list':
             permission_classes = [permissions.IsAuthenticated]
-        elif self.action == 'retrieve':
-            permission_classes = [permissions.DjangoModelPermissions]
-        elif self.action == 'destroy':
-            permission_classes = [permissions.DjangoModelPermissions]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.DjangoModelPermissions]
         return [permission() for permission in permission_classes]
     
     queryset = HojaPicking.objects.all().order_by('-id')
     serializer_class = HojaPickingSerializer
-    filter_backends = [df.DjangoFilterBackend, filters.OrderingFilter]
+    filter_backends = [df.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     filterset_class = HojaPickingFilter
     permission_classes = get_permissions
 

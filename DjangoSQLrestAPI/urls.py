@@ -14,13 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from debug_toolbar.toolbar import debug_toolbar_urls
 from rest_framework.documentation import include_docs_urls
+from rest_framework_simplejwt import views as jwt_views
+from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf.urls.static import static
-from django.conf import settings
+from django.urls import path, include
 from SI_Flet.views import SI_Flet
+from django.conf import settings
+from django.contrib import admin
 
 
 urlpatterns = [
@@ -29,5 +30,7 @@ urlpatterns = [
     path('docs/', include_docs_urls(title='SI Api Documentation')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('SI_Flet/', SI_Flet),
-    path('', include('AsistVirtual.urls'))
+    path('', include('AsistVirtual.urls')),
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + debug_toolbar_urls()
