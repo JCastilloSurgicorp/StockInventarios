@@ -3,4 +3,4 @@ from django.http import HttpResponse
 
 # Create your views here.
 def SI_Flet(request):
-    return render(request, 'dist/index.html')                               
+    return render(request, 'web/index.html')                               
