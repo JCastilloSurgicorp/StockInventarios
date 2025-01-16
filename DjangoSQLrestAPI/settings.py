@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'django_filters',
-    'debug_toolbar',
     'coreapi',
+    'debug_toolbar',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt', 
@@ -53,10 +53,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -137,7 +137,7 @@ USE_TZ = True
 
 INTERNAL_IPS = [
     # ...
-    #'127.0.0.1',
+    '192.168.2.134',
     #'0.0.0.0',
     # ...
 ]

@@ -1,4 +1,6 @@
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions, viewsets, filters
+from rest_framework.exceptions import ValidationError
 from django.contrib.auth.models import Group, User
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -9,7 +11,7 @@ from django.shortcuts import render
 from rest_framework import status
 from PIL import Image, ImageWin
 from pythonwin import win32ui
-from win32 import win32print, win32api
+from win32 import win32print
 from .serializers import *
 from .filters import *
 from .models import *
@@ -415,8 +417,36 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
     queryset = HojaPicking.objects.all().order_by('-id')
     serializer_class = HojaPickingSerializer
     filter_backends = [df.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    pagination_class = PageNumberPagination
+    pagination_class.page_size_query_param = 'top'
+    pagination_class.max_page_size = 1000
     filterset_class = HojaPickingFilter
     permission_classes = get_permissions
+
+    def partial_update(self, request, *args, **kwargs):
+        record = self.get_object()
+        SelectedRecord = self.get_serializer(record).data
+        usuario_actual = request.user
+        nombre_usuario = usuario_actual.first_name + ' ' + usuario_actual.last_name
+        nuevo_estado = request.data.get("status_picking")
+        try:
+            # Verificar si el estado actual es "Picking En Proceso"
+            if nuevo_estado == "Picking En Proceso" and SelectedRecord['status_picking'] == "Picking En Proceso":
+                msj = f"No se puede cambiar el estado a {SelectedRecord['status_picking']}. Ya fue cambiado por {SelectedRecord['almacen']}"
+                return Response({"detail": msj}, status=status.HTTP_400_BAD_REQUEST)
+            # Verificar si el estado está cambiando a "Picking En Proceso" desde "Picking Pendiente"
+            if nuevo_estado == "Picking En Proceso" and SelectedRecord['status_picking'] != "Picking Pendiente":
+                msj = f"El estado solo puede cambiar de 'Picking Pendiente' a 'Picking En Proceso'."
+                return Response({"detail": msj}, status=status.HTTP_400_BAD_REQUEST)
+            # Verificar si el estado está cambiando a "Picking Terminado" y lo está cambiando el mismo usuario
+            if nuevo_estado == "Picking Terminado" and SelectedRecord['almacen'] != nombre_usuario:
+                msj = f"El estado solo se puede cambiar a {nuevo_estado} por {SelectedRecord['almacen']}."
+                return Response({"detail": msj}, status=status.HTTP_400_BAD_REQUEST)
+            # Continuar con la actualización si las validaciones pasan
+            return super().partial_update(request, *args, **kwargs)
+        except Exception as e:
+            # Manejar errores inesperados
+            return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @action(detail=True, methods=['GET'])
     def print(self, request, pk=None):

@@ -398,6 +398,21 @@ class HojaPicking(models.Model):
         managed = True
         db_table = 'HOJA_PICKING'
 
+class HP_UpdateAudit(models.Model):
+    id_hp = models.IntegerField(db_column='ID_HP', blank=True, null=False)
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=20, blank=True, null=True)
+    empr_id = models.ForeignKey(SI_Empresa, db_column='EMPRESA_ID', on_delete=models.DO_NOTHING, blank=True, null=True)
+    estado_old = models.TextField(db_column='ESTADO_OLD', blank=True, null=True)
+    estado_new = models.TextField(db_column='ESTADO_NEW', blank=True, null=True)
+    fecha_hora = models.DateTimeField(db_column='FECHA_HORA', blank=True, null=True)
+    picking_time = models.TimeField(db_column='PICKING_TIME', blank=True, null=True)
+
+    def __str__(self):
+        return self.nro_guia
+    
+    class Meta:
+        managed = True
+        db_table = 'HP_UPDATE_AUDIT'
 
 class Pend_Guias(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
