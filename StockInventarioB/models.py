@@ -286,20 +286,21 @@ class GR_Busqueda(models.Model):
         db_table = 'GR_BUSQUEDA'
 
 
-#class GR_UpdateAudit(models.Model):
-    #nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
-    #empresa = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True)
-    #nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
-    #estado_old = models.TextField(db_column='ESTADO_OLD', blank=True, null=True)
-    #estado_new = models.TextField(db_column='ESTADO_NEW', blank=True, null=True)
-    #fecha_hora = models.DateTimeField(db_column='FECHA_HORA', blank=True, null=True)
+class GR_UpdateAudit(models.Model):
+    id_concat = models.BigIntegerField(db_column='ID_CONCAT', blank=True, null=True)
+    nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
+    empresa = models.IntegerField(db_column='EMPRESA_ID', blank=True, null=True)
+    nro_item = models.IntegerField(db_column='NUMERO_ITEM', blank=True, null=True)
+    estado_old = models.TextField(db_column='ESTADO_OLD', blank=True, null=True)
+    estado_new = models.TextField(db_column='ESTADO_NEW', blank=True, null=True)
+    fecha_hora = models.DateTimeField(db_column='FECHA_HORA', blank=True, null=True)
 
-    #def __str__(self):
-       # return self.nro_fact
+    def __str__(self):
+       return self.nro_guia
     
-    #class Meta:
-        #managed = True
-        #db_table = 'GR_UPDATE_AUDIT'
+    class Meta:
+        managed = True
+        db_table = 'GR_UPDATE_AUDIT'
 
 
 class Fact_Busqueda(models.Model):

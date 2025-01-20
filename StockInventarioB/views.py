@@ -592,7 +592,7 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
             for row in kits:
                 count = 0
                 for cel in SelectedDescripcion:
-                    if cel['kits_items'] in row:
+                    if cel['kits_items'] == row:
                         count = count + 1
                 fix = 6
                 print('save_PDF:', len(row))
