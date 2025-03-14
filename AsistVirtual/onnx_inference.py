@@ -1,6 +1,7 @@
 from StockInventarioB.serializers import *
 from StockInventarioB.filters import *
 from StockInventarioB.models import *
+from django.db.models import Sum
 import ollama
 import json
 
@@ -11,7 +12,7 @@ def generate_suggestion(user_prompt, max_length=50):
             "type": "function",
             "function": {
                 "name": "check_stock",
-                "description": "Obtiene la cantidad que se tiene en el almacen del producto a consultar. Usa esta función cuando el usuario pida saber la cantidad que existe de un producto especifico del inventario. Ejemplo: ¿Cuanto tenemos de UM-4?",
+                "description": "Obtiene la cantidad(stock) que se tiene en el almacen del producto a consultar. Usa esta función cuando el usuario pida saber la cantidad que existe de un producto especifico del inventario.",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -29,7 +30,7 @@ def generate_suggestion(user_prompt, max_length=50):
     messages = [
         {
             "role": "system",
-            "content": "Eres un asistente de almacen que ayuda a los usuarios a saber si se tiene o no stock de ciertos productos y cuantos hay en el almacen. El usuario te entregará el nombre del producto. Ejemplo: UM-4",
+            "content": "Eres un asistente de almacen que ayuda a los usuarios a saber si se tiene o no stock de ciertos productos y cuantos hay en el almacen. El usuario te entregará el nombre comercial del producto y tienes que entregarle la cantidad de producto que existe por cada producto que en su descripcion contenga el nombre brindado (Normalmente el nombre del producto empieza con Mayúscula). Si no entendiste la pregunta o no lograste determinar cual era el producto a consultar, pide al usuario que ingrese el nombre del producto o que reformule su pregunta",
         },
         {
             "role": "user",
@@ -45,11 +46,12 @@ def generate_suggestion(user_prompt, max_length=50):
     # Get the name the AI wants to use a tool to say hello to
     try:
         tool_call = response.message.tool_calls[0]
-        #return tool_call.function.arguments.get("prod")
         arguments = tool_call.function.arguments
         producto = arguments.get("prod")
-        # Call the get_delivery_date function with the extracted order_id
+        # Call the function
         stock = check_stock(producto)
+        response.message.content = stock
+        return response.message
         # Create tool call request
         assistant_tool_call_request_message = {
             "role": "assistant",
@@ -62,12 +64,7 @@ def generate_suggestion(user_prompt, max_length=50):
         # Create a message containing the result of the function call
         function_call_result_message = {
             "role": "tool",
-            "content": json.dumps(
-                {
-                    "prod": producto,
-                    "stock": stock,
-                }
-            )
+            "content": json.dumps(stock)
         }
         # Prepare the chat completion call payload
         completion_messages_payload = [
@@ -83,15 +80,18 @@ def generate_suggestion(user_prompt, max_length=50):
         )
         return response.message
     except Exception as e:
-        return f"Error:{e}"
+        return response.message
 
 # Define a simple function
 def check_stock(prod):
     try:
-        sum = 0
-        productos = StocksInventario.objects.filter(producto=prod).order_by('-stock')
-        for stock in productos:
-            sum = sum + stock.stock
-        return f"{sum}"
+        productos = StocksInventario.objects.values('descr_prod').annotate(stock_total=Sum('stock')).filter(descr_prod__contains=prod, stock__gt=0).order_by('descr_prod')
+        stock_string = ""
+        for item in productos:
+            stock_string = stock_string + f"{item['descr_prod']}:  \t{item['stock_total']} unidades,\n"
+        stock_string = stock_string[:-2]
+        if stock_string == "":
+            return f"No tenemos stock de {prod} Actualmente.\nDesea consultar sobre otro producto?"
+        return f"Tenemos los siguiente productos {prod} en stock: \n\n{stock_string}\n\nDesea consultar sobre algún otro producto?"
     except Exception as e:
         return f"Error:{e}"
