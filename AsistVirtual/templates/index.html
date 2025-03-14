@@ -1,0 +1,19 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Recorder</title>
+        <link rel="stylesheet" href="{% static '/css/AV_index.css' %}">
+    </head>
+    <body>
+        <h1>Asistente Virtual</h1>
+        {{response|linebreaks}}
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button>enviar</button>
+        </form>
+    </body>
+</html>

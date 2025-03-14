@@ -48,8 +48,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt', 
     'StockInventarioB.apps.StockinventariobConfig',
     'AsistVirtual',
-    'SI_Flet',
+    'SharePoint_List',
+    'sharepoint_rest_api',
     'flet_django',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +139,7 @@ USE_TZ = True
 
 INTERNAL_IPS = [
     # ...
-    '192.168.2.134',
+    #'192.168.2.134',
     #'0.0.0.0',
     # ...
 ]

@@ -19,7 +19,6 @@ from rest_framework_simplejwt import views as jwt_views
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf.urls.static import static
 from django.urls import path, include
-from SI_Flet.views import SI_Flet
 from django.conf import settings
 from django.contrib import admin
 
@@ -28,9 +27,9 @@ urlpatterns = [
     path('', include('StockInventarioB.urls')),
     path('admin/', admin.site.urls),
     path('docs/', include_docs_urls(title='SI Api Documentation')),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('', include('SI_Flet.urls')),
     path('', include('AsistVirtual.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/', include('sharepoint_rest_api.urls', namespace='sharepoint')),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('__debug__/', include('debug_toolbar.urls')),
