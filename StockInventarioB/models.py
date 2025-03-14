@@ -174,7 +174,7 @@ class GuiasRemision(models.Model):
     motivo = models.CharField(db_column='MOTIVO_TRASLADO', max_length=50, blank=True, null=True)
     cliente = models.CharField(db_column='NOMBRE_CLIENTE', max_length=150, blank=True, null=True)
     entrega = models.CharField(db_column='DIRECCION_ENTREGA', max_length=255, blank=True, null=True)
-    fecha_guia = models.DateField(db_column='FECHA_GUIA', blank=True, null=True)
+    fecha_guia = models.DateTimeField(db_column='FECHA_GUIA', blank=True, null=True)
     estado = models.CharField(db_column='ESTADO', max_length=3, blank=True, null=True)
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
     obs = models.CharField(db_column='OBSERVACION', max_length=500, blank=True, null=True)
@@ -208,6 +208,8 @@ class GR_Descripcion(models.Model):
     id_concat = models.BigIntegerField(db_column='ID_CONCAT', blank=True, null=True)
     kits_items = models.CharField(db_column='KITS_ITEM', max_length=120, blank=True, null=True)
     codigo_qr = models.CharField(db_column='CODIGO_QR', max_length=150, blank=True, null=True) 
+    tipo_producto = models.CharField(db_column='TIPO_PRODUCTO', max_length=6, blank=True, null=True)
+    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
 
     def __str__(self):
         return self.prod
@@ -225,7 +227,7 @@ class GuiasRemision_OC(models.Model):
     motivo = models.CharField(db_column='MOTIVO_TRASLADO', max_length=50, blank=True, null=True)
     cliente = models.CharField(db_column='NOMBRE_CLIENTE', max_length=150, blank=True, null=True)
     entrega = models.CharField(db_column='DIRECCION_ENTREGA', max_length=255, blank=True, null=True)
-    fecha_guia = models.DateField(db_column='FECHA_GUIA', blank=True, null=True)
+    fecha_guia = models.DateTimeField(db_column='FECHA_GUIA', blank=True, null=True)
     estado = models.CharField(db_column='ESTADO', max_length=3, blank=True, null=True)
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
     obs = models.CharField(db_column='OBSERVACION', max_length=500, blank=True, null=True)
@@ -261,6 +263,8 @@ class GR_Descripcion_OC(models.Model):
     id_concat = models.BigIntegerField(db_column='ID_CONCAT', blank=True, null=True)
     kits_items = models.CharField(db_column='KITS_ITEM', max_length=120, blank=True, null=True)
     codigo_qr = models.CharField(db_column='CODIGO_QR', max_length=150, blank=True, null=True) 
+    tipo_producto = models.CharField(db_column='TIPO_PRODUCTO', max_length=6, blank=True, null=True)
+    id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
     
     def __str__(self):
         return self.prod
@@ -273,10 +277,11 @@ class GR_Descripcion_OC(models.Model):
 class GR_Busqueda(models.Model):
     nro_guia = models.CharField(db_column='NUMERO_GUIA', max_length=50, blank=True, null=True)
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True)
-    fecha_guia = models.DateField(db_column='FECHA_GUIA', blank=True, null=True)
+    fecha_guia = models.DateTimeField(db_column='FECHA_GUIA', blank=True, null=True)
     oc_cliente = models.CharField(db_column='OC_CLIENTE', max_length=20, blank=True, null=True)
     fecha_cirugia = models.DateField(db_column='FECHA_CIRUGIA', blank=True, null=True)
     zona = models.CharField(db_column='ZONA', max_length=60, blank=True, null=True)
+    empresa = models.ForeignKey(SI_Empresa, on_delete=models.DO_NOTHING, db_column='EMPRESA_ID', blank=True, null=True)
     
     def __str__(self):
         return self.nro_guia
@@ -422,7 +427,7 @@ class Pend_Guias(models.Model):
     zona = models.CharField(db_column='ZONA', max_length=60, blank=True, null=True)
     tipo_venta = models.CharField(db_column='TIPO_VENTA', max_length=60, blank=True, null=True)
     empr = models.CharField(db_column='EMPRESA', max_length=10, blank=True, null=True)
-    f_guia = models.DateField(db_column='FECHA_GUIA', blank=True, null=True)
+    f_guia = models.DateTimeField(db_column='FECHA_GUIA', blank=True, null=True)
     id_app = models.IntegerField(db_column='ID_APP', blank=True, null=True) 
     cant_pend = models.IntegerField(db_column='CANT_PEND_TOTAL', blank=True, null=True)    
     

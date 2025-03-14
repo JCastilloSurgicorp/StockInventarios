@@ -19,4 +19,14 @@ class HojaPickingFilter(django_filters.FilterSet):
             'atencion':['exact', 'contains'], 
             'fecha_atencion':['exact', 'lte', 'gte'], 
             'ubicacion_sector':['exact', 'contains'],
+        }  
+
+class StocksInventarioFilter(django_filters.FilterSet):
+    class Meta:
+        model = StocksInventario
+        fields = {
+            'id':['exact'],
+            'producto':['exact', 'contains'],
+            'descr_prod':['exact', 'contains'], 
+            'stock':['exact', 'lte', 'gte'], 
         }                                                                                                                                                                                                                                                                  

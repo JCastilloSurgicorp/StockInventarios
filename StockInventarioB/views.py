@@ -2,9 +2,11 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions, viewsets, filters
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth.models import Group, User
+from .onnx_inference import generate_suggestion
 from rest_framework.decorators import action
 from rest_framework.response import Response
 import django_filters.rest_framework as df
+from rest_framework.views import APIView
 from datetime import datetime, timezone
 from pdf2image import convert_from_path
 from django.shortcuts import render
@@ -250,6 +252,7 @@ class StocksInventarioViewSet(viewsets.ModelViewSet):
     
     queryset = StocksInventario.objects.all().order_by('-stock')
     serializer_class = StocksInventarioSerializer
+    filterset_class = StocksInventarioFilter
     permission_classes = get_permissions
 
 class GuiasRemisionViewSet(viewsets.ModelViewSet):
@@ -273,7 +276,7 @@ class GuiasRemisionViewSet(viewsets.ModelViewSet):
     queryset = GuiasRemision.objects.all().order_by('id')
     serializer_class = GuiasRemisionSerializer
     filter_backends = [df.DjangoFilterBackend]
-    filterset_fields = ['nro_guia']
+    filterset_fields = ['nro_guia','empresa']
     permission_classes = get_permissions
 
 class GR_DescripcionViewSet(viewsets.ModelViewSet):
@@ -297,7 +300,7 @@ class GR_DescripcionViewSet(viewsets.ModelViewSet):
     queryset = GR_Descripcion.objects.all().order_by('-id')
     serializer_class = GR_DescripcionSerializer
     filter_backends = [df.DjangoFilterBackend]
-    filterset_fields = ['id','nro_guia']
+    filterset_fields = ['nro_guia','empr_id']
     permission_classes = get_permissions
 
 class GuiasRemision_OCViewSet(viewsets.ModelViewSet):
@@ -319,7 +322,7 @@ class GuiasRemision_OCViewSet(viewsets.ModelViewSet):
     queryset = GuiasRemision_OC.objects.all().order_by('-id')
     serializer_class = GuiasRemision_OCSerializer
     filter_backends = [df.DjangoFilterBackend]
-    filterset_fields = ['nro_guia']
+    filterset_fields = ['nro_guia','empresa']
     permission_classes = get_permissions
 
 class GR_Descripcion_OCViewSet(viewsets.ModelViewSet):
@@ -343,7 +346,7 @@ class GR_Descripcion_OCViewSet(viewsets.ModelViewSet):
     queryset = GR_Descripcion_OC.objects.all().order_by('id')
     serializer_class = GR_Descripcion_OCSerializer
     filter_backends = [df.DjangoFilterBackend]
-    filterset_fields = ['nro_guia']
+    filterset_fields = ['id','nro_guia','empr_id']
     permission_classes = get_permissions
 
 class GR_BusquedaViewSet(viewsets.ModelViewSet):
@@ -432,11 +435,16 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
         try:
             # Verificar si el estado actual es "Picking En Proceso"
             if nuevo_estado == "Picking En Proceso" and SelectedRecord['status_picking'] == "Picking En Proceso":
-                msj = f"No se puede cambiar el estado a {SelectedRecord['status_picking']}. Ya fue cambiado por {SelectedRecord['almacen']}"
+                if SelectedRecord['almacen'] == nombre_usuario:
+                    record.fecha_almacen = request.data.get("fecha_almacen")
+                    record.save()
+                    msj = f"Se Reinició el Proceso de Picking - {record.fecha_almacen}"
+                    return Response({"detail": msj}, status=status.HTTP_200_OK)
+                msj = f"No se puede cambiar el estado a {SelectedRecord['status_picking']}. Ya fue cambiado por {SelectedRecord['almacen']} el día {SelectedRecord['fecha_almacen']}"
                 return Response({"detail": msj}, status=status.HTTP_400_BAD_REQUEST)
             # Verificar si el estado está cambiando a "Picking En Proceso" desde "Picking Pendiente"
             if nuevo_estado == "Picking En Proceso" and SelectedRecord['status_picking'] != "Picking Pendiente":
-                msj = f"El estado solo puede cambiar de 'Picking Pendiente' a 'Picking En Proceso'."
+                msj = f"El estado solo puede cambiar de 'Picking Pendiente' a 'Picking En Proceso'. El estado actual es {SelectedRecord['status_picking']}"
                 return Response({"detail": msj}, status=status.HTTP_400_BAD_REQUEST)
             # Verificar si el estado está cambiando a "Picking Terminado" y lo está cambiando el mismo usuario
             if nuevo_estado == "Picking Terminado" and SelectedRecord['almacen'] != nombre_usuario:
@@ -592,7 +600,7 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
             for row in kits:
                 count = 0
                 for cel in SelectedDescripcion:
-                    if cel['kits_items'] == row:
+                    if cel['kits_items'] != "" and cel['kits_items'] in row:
                         count = count + 1
                 fix = 6
                 print('save_PDF:', len(row))
@@ -623,7 +631,7 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
         pdf.line(x1=x_start, y1=y_start, x2=x_end, y2=y_start)
         x_start = pdf.get_x() + 20
         y_start = pdf.get_y() + 10
-        qr = f"http://api.qrserver.com/v1/create-qr-code/?data={SelectedRecord['nro_guia']}"
+        qr = f"http://api.qrserver.com/v1/create-qr-code/?data={SelectedRecord['nro_guia']}-{empr_id}"
         pdf.image(qr, x_start, y_start, 20, 0, 'PNG')
         pdf.ln()
         pdf.output(filename)
@@ -695,3 +703,17 @@ class Pend_ItemsViewSet(viewsets.ModelViewSet):
     queryset = Pend_Items.objects.all().order_by('-id')
     serializer_class = Pend_ItemsSerializer
     permission_classes = get_permissions
+
+
+class RecordSuggestionView(APIView):
+    def post(self, request):
+        # Obtén el prompt enviado en el cuerpo de la solicitud
+        prompt = request.data.get("prompt", "")
+        if not prompt:
+            return Response({"message": "El prompt no puede estar vacío."}, status=status.HTTP_400_BAD_REQUEST)
+        # Genera la sugerencia usando el modelo ONNX
+        try:
+            suggestion = generate_suggestion(prompt)
+            return Response({"message": suggestion}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -28,5 +28,6 @@ router.register(r'Pend_Items', views.Pend_ItemsViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('question/', views.Question)
+    path('question/', views.Question),
+    path("api/record-suggestion/", views.RecordSuggestionView.as_view(), name="record-suggestion"),
 ]
