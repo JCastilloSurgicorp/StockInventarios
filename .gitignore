@@ -4,20 +4,32 @@
 # Ignora el cache de python de SIB
 /StockInventarioB/__pycache__
 
+# Ignora el cache de python de SIB migrations
+/StockInventarioB/migrations/__pycache__
+
 # Ignora el cache de python del Django rest API
 /DjangoSQLrestAPI/__pycache__
+
+# Ignora el cache de python de SIB migrations
+/DjangoSQLrestAPI/migrations/__pycache__
 
 # Ignora el cache de python del Django rest API
 /SI_Flet/__pycache__
 
+# Ignora el cache de python de SIB migrations
+/SI_Flet/migrations/__pycache__
+
 # Ignora el cache de python del Django rest API
 /SharePoint_List/__pycache__
+
+# Ignora el cache de python de SIB migrations
+/SharePoint_List/migrations/__pycache__
 
 # Ignora el cache de python del Django rest API
 /AsistVirtual/__pycache__
 
 # Ignora el cache de python de SIB migrations
-/StockInventarioB/migrations/__pycache__
+/AsistVirtual/migrations/__pycache__
 
 # Ignora el sqlite que se crea por defecto
 /db.sqlite3
