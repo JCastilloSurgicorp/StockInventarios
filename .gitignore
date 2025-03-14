@@ -10,6 +10,12 @@
 # Ignora el cache de python del Django rest API
 /SI_Flet/__pycache__
 
+# Ignora el cache de python del Django rest API
+/SharePoint_List/__pycache__
+
+# Ignora el cache de python del Django rest API
+/AsistVirtual/__pycache__
+
 # Ignora el cache de python de SIB migrations
 /StockInventarioB/migrations/__pycache__
 
