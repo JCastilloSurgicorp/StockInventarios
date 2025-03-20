@@ -2,7 +2,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions, viewsets, filters
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth.models import Group, User
-from .onnx_inference import generate_suggestion
+from AsistVirtual.onnx_inference import generate_suggestion
 from rest_framework.decorators import action
 from rest_framework.response import Response
 import django_filters.rest_framework as df

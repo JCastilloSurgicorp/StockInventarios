@@ -38,7 +38,7 @@ def generate_suggestion(user_prompt, max_length=50):
         },
     ]
     response = ollama.chat(
-        model="qwen2.5:0.5b",
+        model="tripolskypetr/gemma3-tools:4b",
         messages=messages,
         tools=tools,
     )
@@ -51,33 +51,6 @@ def generate_suggestion(user_prompt, max_length=50):
         # Call the function
         stock = check_stock(producto)
         response.message.content = stock
-        return response.message
-        # Create tool call request
-        assistant_tool_call_request_message = {
-            "role": "assistant",
-            "tool_calls": [
-                {
-                    "function": response.message.tool_calls[0].function,
-                }
-            ],
-        }
-        # Create a message containing the result of the function call
-        function_call_result_message = {
-            "role": "tool",
-            "content": json.dumps(stock)
-        }
-        # Prepare the chat completion call payload
-        completion_messages_payload = [
-            messages[0],
-            messages[1],
-            assistant_tool_call_request_message,
-            function_call_result_message,
-        ]
-        response = ollama.chat(
-            model="qwen2.5:0.5b",
-            messages=completion_messages_payload,
-            tools=tools,
-        )
         return response.message
     except Exception as e:
         return response.message
