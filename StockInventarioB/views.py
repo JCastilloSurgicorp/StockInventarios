@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pdf2image import convert_from_path
 from django.shortcuts import render
 from rest_framework import status
+from django.db.models import Sum
 from PIL import Image, ImageWin
 from pythonwin import win32ui
 from win32 import win32print
@@ -250,10 +251,22 @@ class StocksInventarioViewSet(viewsets.ModelViewSet):
             permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
     
-    queryset = StocksInventario.objects.all().order_by('-stock')
+    queryset = StocksInventario.objects.filter(stock__gt=0).order_by('-stock')
+    filter_backends = [df.DjangoFilterBackend]
     serializer_class = StocksInventarioSerializer
     filterset_class = StocksInventarioFilter
     permission_classes = get_permissions
+
+    @action(detail=False, methods=['GET'], url_path='<str:prod>')
+    def resumen(self, request, prod, pk=None):
+        productos = StocksInventario.objects.values('descr_prod').annotate(stock_total=Sum('stock')).filter(descr_prod__contains=prod, stock__gt=0).order_by('descr_prod')
+        stock_string = ""
+        for item in productos:
+            stock_string = stock_string + f"{item['descr_prod']}:  \t{item['stock_total']} unidades,\n"
+        stock_string = stock_string[:-2]
+        if stock_string == "":
+            return Response({'detail': f'No tenemos stock de {prod} Actualmente.\nDesea consultar sobre otro producto?'}, status=status.HTTP_200_OK)
+        return Response({'message': f'Tenemos los siguiente productos {prod} en stock: \n\n{stock_string}\n\nDesea consultar sobre algún otro producto?'}, status=status.HTTP_200_OK)
 
 class GuiasRemisionViewSet(viewsets.ModelViewSet):
     """
