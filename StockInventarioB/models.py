@@ -473,3 +473,14 @@ class Pend_Update_Audit(models.Model):
     class Meta:
         managed = True
         db_table = 'PEND_UPDATE_AUDIT'
+
+class Medicos(models.Model):
+    nro_coleg = models.CharField(db_column='NRO_COLEGIATURA', max_length=20, blank=True, null=True)
+    nombre_med = models.CharField(db_column='NOMBRE_MEDICO', max_length=60, blank=True, null=True)
+    
+    def __str__(self):
+        return self.nombre_med
+    
+    class Meta:
+        managed = True
+        db_table = 'MEDICOS'
