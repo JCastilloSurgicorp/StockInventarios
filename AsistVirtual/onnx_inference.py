@@ -3,7 +3,7 @@ from StockInventarioB.filters import *
 from StockInventarioB.models import *
 from django.db.models import Sum
 import ollama
-import json
+import time
 
 def generate_suggestion(user_prompt, max_length=50):
     # Tell the AI about our function
@@ -58,13 +58,14 @@ def generate_suggestion(user_prompt, max_length=50):
 # Define a simple function
 def check_stock(prod):
     try:
+        inicio = time.time()
         productos = StocksInventario.objects.values('descr_prod').annotate(stock_total=Sum('stock')).filter(descr_prod__contains=prod, stock__gt=0).order_by('descr_prod')
         stock_string = ""
         for item in productos:
             stock_string = stock_string + f"{item['descr_prod']}:  \t{item['stock_total']} unidades,\n"
         stock_string = stock_string[:-2]
         if stock_string == "":
-            return f"No tenemos stock de {prod} Actualmente.\nDesea consultar sobre otro producto?"
-        return f"Tenemos los siguiente productos {prod} en stock: \n\n{stock_string}\n\nDesea consultar sobre algún otro producto?"
+            return f"No tenemos stock de {prod} Actualmente.\nDesea consultar sobre otro producto?(t:{time.time()-inicio})"
+        return f"Tenemos los siguiente productos {prod} en stock: \n\n{stock_string}\n\nDesea consultar sobre algún otro producto?(t:{time.time()-inicio})"
     except Exception as e:
         return f"Error:{e}"

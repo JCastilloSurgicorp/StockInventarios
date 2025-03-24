@@ -257,8 +257,9 @@ class StocksInventarioViewSet(viewsets.ModelViewSet):
     filterset_class = StocksInventarioFilter
     permission_classes = get_permissions
 
-    @action(detail=False, methods=['GET'], url_path='<str:prod>')
-    def resumen(self, request, prod, pk=None):
+    @action(detail=False, methods=['GET'], url_path='resumen')
+    def resumen(self, request):
+        prod = request.query_params.get('descr_prod')
         productos = StocksInventario.objects.values('descr_prod').annotate(stock_total=Sum('stock')).filter(descr_prod__contains=prod, stock__gt=0).order_by('descr_prod')
         stock_string = ""
         for item in productos:
