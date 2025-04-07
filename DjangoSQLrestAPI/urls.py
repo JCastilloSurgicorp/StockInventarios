@@ -16,7 +16,6 @@ Including another URLconf
 """
 from rest_framework.documentation import include_docs_urls
 from rest_framework_simplejwt import views as jwt_views
-from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings

@@ -18,7 +18,7 @@ class HojaPickingFilter(django_filters.FilterSet):
             'tipo_pedido':['exact'],
             'atencion':['exact', 'contains'], 
             'fecha_atencion':['exact', 'lte', 'gte'], 
-            'ubicacion_sector':['exact', 'contains'],
+            'ubicacion_sector':['in', 'exact', 'contains'],
         }  
 
 class StocksInventarioFilter(django_filters.FilterSet):
