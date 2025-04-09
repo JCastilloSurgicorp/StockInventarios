@@ -26,7 +26,7 @@ import os
 
 def Question(request):
     return render(request, 'SIB/index.html')
-# Create your views here.
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
@@ -487,7 +487,7 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
             Guia = GuiasRemision.objects.get(id=gr_id)
             Descripcion = GR_Descripcion.objects.filter(nro_guia=SelectedRecord['nro_guia'], empr_id=empr_id)
         else:
-            gr_url = SelectedRecord['gr_oc_id'][35:]
+            gr_url = SelectedRecord['gr_oc_id'][38:]
             gr_id = ''
             for letter in gr_url:
                 if letter == '/':
@@ -681,7 +681,6 @@ class HojaPickingViewSet(viewsets.ModelViewSet):
             return Response({'message': f"Error al enviar a la impresora: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
         return Response({'message': f'Se imprimió correctamente el ticket: {SelectedRecord['nro_guia']}.'}, status=status.HTTP_200_OK)
 
-
 class Pend_GuiasViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -717,7 +716,6 @@ class Pend_ItemsViewSet(viewsets.ModelViewSet):
     queryset = Pend_Items.objects.all().order_by('-id')
     serializer_class = Pend_ItemsSerializer
     permission_classes = get_permissions
-
 
 class RecordSuggestionView(APIView):
     def post(self, request):
