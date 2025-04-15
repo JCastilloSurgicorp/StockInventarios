@@ -90,16 +90,16 @@ WSGI_APPLICATION = 'DjangoSQLrestAPI.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE'                : 'mssql',
-        'NAME'                  : 'SURGICORP_POWERAPPS',
-        'HOST'                  : 'SVRSURGI\SVRBIOPRO',
-        'USER'                  : 'powerapps',
-        'PASSWORD'              : '*Surgi007',
-        'Trusted_Connection'    : 'no',
-        'PORT'                  : '',
+        'ENGINE'                : config('ENGINE'),
+        'NAME'                  : config('NAME'),
+        'HOST'                  : config('HOST'),
+        'USER'                  : config('USER'),
+        'PASSWORD'              : config('PASSWORD'),
+        'Trusted_Connection'    : config('Trusted_Connection'),
+        'PORT'                  : config('PORT'),
         'OPTIONS': {
-            'driver'        : "ODBC Driver 18 for SQL Server",
-            'extra_params'  : 'TrustServerCertificate=yes'    
+            'driver'        : config('driver'),
+            'extra_params'  : config('extra_params')    
         }
     }
 }
