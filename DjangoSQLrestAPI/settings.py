@@ -145,8 +145,8 @@ INTERNAL_IPS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = 'C:/Users/srvcaminitos/Documents/DjangoAPI/StockInventarios/DjangoSQLrestAPI/static'
+STATIC_URL = config('STATIC_URL')
+STATIC_ROOT = config('STATIC_ROOT')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
