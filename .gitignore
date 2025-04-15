@@ -13,6 +13,9 @@
 # Ignora el cache de python de SIB migrations
 /DjangoSQLrestAPI/migrations/__pycache__
 
+# Ignora el cache de python de SIB migrations
+/DjangoSQLrestAPI/.env
+
 # Ignora el cache de python del Django rest API
 /SI_Flet/__pycache__
 
