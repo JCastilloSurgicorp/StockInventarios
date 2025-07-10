@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from .views import *
 
 urlpatterns = [
-    path('Sharepoint_List/', views.SharePoint_List)
+    path('lists/<str:list_title>/', SharePointListView.as_view()),
+    path('lists/<str:list_title>/items/<str:item_id>/', SharePointItemDetailView.as_view()),
 ]

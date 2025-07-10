@@ -36,3 +36,9 @@
 
 # Ignora el sqlite que se crea por defecto
 /db.sqlite3
+
+# Ignora el sqlite que se crea por defecto
+/api_audit.log
+
+# Ignora el sqlite que se crea por defecto
+/debug.log

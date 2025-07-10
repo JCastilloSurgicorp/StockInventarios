@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<h1>Items de la Lista: {{ list_id }}</h1>
+<table>
+    <thead>
+        <tr>
+            {% for field in items.0.properties.keys %}
+                <th>{{ field }}</th>
+            {% endfor %}
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                {% for value in item.properties.values %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+                <td>
+                    <a href="{{ item.id }}/change/">Editar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

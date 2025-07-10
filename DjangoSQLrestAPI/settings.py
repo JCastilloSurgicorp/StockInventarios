@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_simplejwt', 
+    'rest_framework_simplejwt',
+    'channels', 
     'StockInventarioB.apps.StockinventariobConfig',
     'AsistVirtual',
     'SharePoint_List',
@@ -82,8 +83,23 @@ TEMPLATES = [
     },
 ]
 
+# Especifica la aplicación WSGI (Síncrono)
 WSGI_APPLICATION = 'DjangoSQLrestAPI.wsgi.application'
 
+# Configuración de Channels (usando Redis como backend)
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("192.168.2.134", 6379)],
+            "capacity": 1500, 
+            "group_expiry": 1800, 
+        },
+    },
+}
+
+# Especifica la aplicación ASGI (Asíncrono)
+ASGI_APPLICATION = "proyecto.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -105,6 +121,16 @@ DATABASES = {
 }
 
 DATABASE_CONNECTION_POOLING = True
+
+# Sharepoint Online Conection
+
+SHAREPOINT_CONFIG = {
+    'site_url': config('SHAREPOINT_SITE_URL'),
+    'tenant_id': config('SHAREPOINT_TENANT_ID'),
+    'client_id': config('SHAREPOINT_CLIENT_ID'),
+    'thumbprint': config('SHAREPOINT_THUMBPRINT'),
+    'certificate_path': config('SHAREPOINT_CERTIFICATE_PATH'),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -171,3 +197,44 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+# Log de los errores del Django
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+        'file2': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'api_audit.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['file2'],
+            'level': 'INFO',
+        },
+    },
+}
+
+CSRF_TRUSTED_ORIGINS = [
+    '192.168.2.134'
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "192.168.2.134",
+]
+
+# Importante para proxies
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# USE_X_FORWARDED_HOST = True
