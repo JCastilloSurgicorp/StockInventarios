@@ -82,6 +82,8 @@ def Terminado(modeladmin, request, queryset):
 class HojaPickingAdmin(admin.ModelAdmin):
     list_display = ["id", "nro_guia", "fecha_atencion","status_picking", "tipo_pedido", "ubicacion_sector", "sector", "empr_id"]
     actions = [Pendiente, Proceso, Terminado]
+    search_fields = ["nro_guia"]
+    raw_id_fields = ["gr_id", "gr_oc_id"]
 
 class Pend_GuiasAdmin(admin.ModelAdmin):
     list_display = ["nro_guia", "f_guia", "cant_pend","repr", "nombre_cliente", "zona", "tipo_venta", "empr", "id_app"]

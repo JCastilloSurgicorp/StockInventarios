@@ -1,7 +1,9 @@
 # tu_app/routing.py
 from django.urls import path
-from . import consumers
+from .consumers import *
 
 websocket_urlpatterns = [
-    path("ws/ruta/", consumers.MiConsumer.as_asgi()),
+    path("ws/test", EchoConsumer.as_asgi()),
+    # path("ws/ruta/", MiConsumer.as_asgi()),
+    path('ws/notificaciones', NotificacionesConsumer.as_asgi()),
 ]

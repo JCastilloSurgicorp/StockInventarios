@@ -1,14 +1,15 @@
+from AsistVirtual.onnx_inference import generate_suggestion
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions, viewsets, filters
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth.models import Group, User
-from AsistVirtual.onnx_inference import generate_suggestion
 from rest_framework.decorators import action
 from rest_framework.response import Response
 import django_filters.rest_framework as df
 from rest_framework.views import APIView
 from datetime import datetime, timezone
 from pdf2image import convert_from_path
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import status
 from django.db.models import Sum
@@ -19,10 +20,26 @@ from .serializers import *
 from .filters import *
 from .models import *
 from fpdf import FPDF
-import subprocess
 import time
+import jwt
 import os
 
+
+# def get_signalr_token(request):
+#     connection_string = "Endpoint=...;AccessKey=..."
+#     endpoint = connection_string.split(";")[0].split("=")[1]
+#     access_key = connection_string.split(";")[1].split("=")[1]
+    
+#     payload = {
+#         "aud": endpoint,
+#         "exp": int(time.time()) + 3600  # 1 hora de validez
+#     }
+#     token = jwt.encode(payload, access_key, algorithm="HS256")
+    
+#     return JsonResponse({
+#         "endpoint": endpoint.replace("https://", ""),
+#         "token": token
+#     })
 
 def Question(request):
     return render(request, 'SIB/index.html')

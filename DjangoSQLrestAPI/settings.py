@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # 'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,28 +42,27 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'coreapi',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'channels', 
     'StockInventarioB.apps.StockinventariobConfig',
     'AsistVirtual',
-    'SharePoint_List',
+    # 'SharePoint_List',
     'sharepoint_rest_api',
-    'flet_django',
-    'django_extensions',
+    # 'django_extensions',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'DjangoSQLrestAPI.urls'
@@ -88,18 +88,21 @@ WSGI_APPLICATION = 'DjangoSQLrestAPI.wsgi.application'
 
 # Configuración de Channels (usando Redis como backend)
 CHANNEL_LAYERS = {
+    # "default": {
+    #     "BACKEND": "channels.layers.InMemoryChannelLayer"  # Usar en memoria
+    # },
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("192.168.2.134", 6379)],
+            "hosts": ["redis://:j4ir0st123@192.168.3.155:6379/0"],
             "capacity": 1500, 
-            "group_expiry": 1800, 
+            "group_expiry": 1800
         },
     },
 }
-
+# CHANNEL_ALLOWED_HOSTS = ["*"]
 # Especifica la aplicación ASGI (Asíncrono)
-ASGI_APPLICATION = "proyecto.asgi.application"
+ASGI_APPLICATION = "DjangoSQLrestAPI.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -201,7 +204,7 @@ REST_FRAMEWORK = {
 # Log de los errores del Django
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'handlers': {
         'file': {
             'level': 'DEBUG',
@@ -215,7 +218,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {
+        'StockInventarioB': {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,
@@ -227,14 +230,15 @@ LOGGING = {
     },
 }
 
-CSRF_TRUSTED_ORIGINS = [
-    '192.168.2.134'
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     '192.168.2.134'
+# ]
 
-CORS_ALLOWED_ORIGINS = [
-    "192.168.2.134",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "192.168.2.134",
+# ]
 
+# AZURE_SIGNALR_CONNECTION_STRING = config('AZURE_SIGNALR_CONNECTION_STRING')
 # Importante para proxies
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # USE_X_FORWARDED_HOST = True
