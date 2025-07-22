@@ -94,7 +94,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": ["redis://:j4ir0st123@192.168.3.155:6379/0"],
+            "hosts": [config('REDIS')],
             "capacity": 1500, 
             "group_expiry": 1800
         },

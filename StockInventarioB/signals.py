@@ -20,7 +20,7 @@ def notificar_cambio_hoja_picking(sender, instance, **kwargs):
             "notificaciones_global",
             {
                 "type": "notificacion.sistema",
-                "message": f"Hoja de Picking {action}: {instance.id}"
+                "message": f"Hoja de Picking {action}: {instance}"
             }
         )
     except Exception as e:
